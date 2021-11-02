@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.qijianguo.micro.services</groupId>
-    <artifactId>user-micro-services</artifactId>
+    <artifactId>user-micro-service</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
@@ -15,5 +15,12 @@
         <module>user-infrastructure</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.qijianguo.micro.services</groupId>
+            <artifactId>base-micro-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.qijianguo.micro.services</groupId>
-    <artifactId>gateway-micro-services</artifactId>
+    <artifactId>gateway-micro-service</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
