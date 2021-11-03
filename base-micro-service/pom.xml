@@ -19,13 +19,17 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>com.qijianguo.micro.services</groupId>
-            <artifactId>account-micro-service</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
 
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/qijianguo/demo-micro-services</url>
+        </repository>
+    </distributionManagement>
 
     <repositories>
         <repository>
@@ -39,5 +43,4 @@
             </snapshots>
         </repository>
     </repositories>
-
 </project>
