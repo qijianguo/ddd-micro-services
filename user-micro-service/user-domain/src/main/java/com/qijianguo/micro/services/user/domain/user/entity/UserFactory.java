@@ -5,6 +5,10 @@ package com.qijianguo.micro.services.user.domain.user.entity;
  */
 public class UserFactory {
 
+    public static User create() {
+        User user = new User();
 
+        return user;
+    }
 
 }
