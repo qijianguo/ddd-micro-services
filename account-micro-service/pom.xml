@@ -19,14 +19,14 @@
         <repository>
             <id>github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/qijianguo/demo-micro-services</url>
+            <url>https://maven.pkg.github.com/qijianguo/ddd-micro-services</url>
         </repository>
     </distributionManagement>
 
     <repositories>
         <repository>
-            <id>demo-micro-service</id>
-            <url>https://maven.pkg.github.com/qijianguo/demo-micro-services</url>
+            <id>ddd-micro-service</id>
+            <url>https://maven.pkg.github.com/qijianguo/ddd-micro-services</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

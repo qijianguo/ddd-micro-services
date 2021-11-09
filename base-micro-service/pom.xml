@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.qijianguo.micro.services</groupId>
-    <artifactId>common-micro-service</artifactId>
+    <artifactId>base-micro-service</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <description>
-        This `base-micro-service` is a common part of all projects. include:
+        This base is a common part of all projects. include:
         * maven dependencies management
         * the basic model of inter-service communication
     </description>
@@ -31,14 +31,14 @@
         <repository>
             <id>github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/qijianguo/demo-micro-services</url>
+            <url>https://maven.pkg.github.com/qijianguo/ddd-micro-services</url>
         </repository>
     </distributionManagement>
 
     <repositories>
         <repository>
-            <id>demo-micro-service</id>
-            <url>https://maven.pkg.github.com/qijianguo/demo-micro-services</url>
+            <id>ddd-micro-service</id>
+            <url>https://maven.pkg.github.com/qijianguo/ddd-micro-services</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
