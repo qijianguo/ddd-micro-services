@@ -1,4 +1,4 @@
-package com.qijianguo.micro.services.common.entity;
+package com.qijianguo.micro.services.base.model.event;
 
 import java.util.Date;
 
