@@ -1,9 +1,6 @@
 package com.qijianguo.micro.services.user.domain.user.entity;
 
-import com.qijianguo.micro.services.user.domain.address.entity.Address;
 import com.qijianguo.micro.services.user.domain.role.entity.Role;
-
-import java.util.List;
 
 public class User {
 
@@ -19,9 +16,23 @@ public class User {
 
     private Integer state;
 
-    private List<Address> addresses;
-
     private Role role;
+
+    private Phone phone;
+
+    public User createUserInfo() {
+        return UserFactory.create();
+    }
+
+    public void updateUserInfo(User user) {}
+
+    public User getUserInfo() {
+        return null;
+    }
+
+    public long generateUserId() {
+        return 0L;
+    }
 
 
 }

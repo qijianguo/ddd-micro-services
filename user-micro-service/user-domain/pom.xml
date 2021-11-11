@@ -12,4 +12,21 @@
     <artifactId>user-domain</artifactId>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>com.qijianguo.micro.services</groupId>
+            <artifactId>base-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.qijianguo.micro.services</groupId>
+            <artifactId>user-infrastructure</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

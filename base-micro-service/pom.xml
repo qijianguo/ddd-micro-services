@@ -6,7 +6,7 @@
 
     <groupId>com.qijianguo.micro.services</groupId>
     <artifactId>base-micro-service</artifactId>
-    <version>1.0.2-RELEASE</version>
+    <version>1.0.3-RELEASE</version>
 
     <packaging>pom</packaging>
 
@@ -67,6 +67,7 @@
         <xxljob.version>2.3.0</xxljob.version>
         <io.grpc.version>1.12.0</io.grpc.version>
         <dubbo.version>2.7.8</dubbo.version>
+
     </properties>
 
     <dependencyManagement>
@@ -74,12 +75,12 @@
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-model</artifactId>
-                <version>1.0.1-RELEASE</version>
+                <version>1.0.0-RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-libs</artifactId>
-                <version>1.0.1-RELEASE</version>
+                <version>1.0.0-RELEASE</version>
             </dependency>
 
             <dependency>
