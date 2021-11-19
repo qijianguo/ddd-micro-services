@@ -5,11 +5,29 @@
     <parent>
         <artifactId>base-micro-service</artifactId>
         <groupId>com.qijianguo.micro.services</groupId>
-        <version>1.0.2-RELEASE</version>
+        <version>1.0.1.RELEASE</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <version>1.0.0-RELEASE</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- api doc -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+        </dependency>
+
+    </dependencies>
 
     <artifactId>base-model</artifactId>
 

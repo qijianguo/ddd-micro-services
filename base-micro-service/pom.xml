@@ -6,7 +6,7 @@
 
     <groupId>com.qijianguo.micro.services</groupId>
     <artifactId>base-micro-service</artifactId>
-    <version>1.0.3-RELEASE</version>
+    <version>1.0.1.RELEASE</version>
 
     <packaging>pom</packaging>
 
@@ -75,12 +75,12 @@
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-model</artifactId>
-                <version>1.0.0-RELEASE</version>
+                <version>1.0.1.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-libs</artifactId>
-                <version>1.0.0-RELEASE</version>
+                <version>1.0.1.RELEASE</version>
             </dependency>
 
             <dependency>
@@ -171,12 +171,6 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
                 <version>${swagger2.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <dependency>
@@ -374,10 +368,6 @@
                 <version>${spring.boot.version}</version>
                 <exclusions>
                     <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
-                    </exclusion>
-                    <exclusion>
                         <groupId>org.springframework</groupId>
                         <artifactId>spring-tx</artifactId>
                     </exclusion>
@@ -530,6 +520,12 @@
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
                 <version>2.8.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.api.version}</version>
             </dependency>
 
         </dependencies>

@@ -5,11 +5,12 @@
     <parent>
         <artifactId>base-micro-service</artifactId>
         <groupId>com.qijianguo.micro.services</groupId>
-        <version>1.0.2-RELEASE</version>
+        <version>1.0.1.RELEASE</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <version>1.0.0-RELEASE</version>
+    <version>1.0.1.RELEASE</version>
 
     <artifactId>base-libs</artifactId>
 
