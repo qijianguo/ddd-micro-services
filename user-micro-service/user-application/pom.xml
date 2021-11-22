@@ -11,5 +11,12 @@
 
     <artifactId>user-application</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.qijianguo.micro.services</groupId>
+            <artifactId>user-domain</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
