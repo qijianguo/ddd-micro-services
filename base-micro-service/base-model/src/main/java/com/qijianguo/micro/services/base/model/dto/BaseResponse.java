@@ -10,21 +10,21 @@ import lombok.Data;
  */
 @Data
 @ApiModel("公共返回结果")
-public class BaseResponse {
+public class BaseResponse<T> {
 
-    @ApiModelProperty(value = "成功：ok， 失败：fail", dataType = "String", example = "ok", position = 1)
+    @ApiModelProperty(value = "成功：SUCCESS， 失败：FAIL", dataType = "String", example = "OK", position = 1)
     private Enum status;
-    @ApiModelProperty(value = "状态码", dataType = "Integer", position = 2)
+    @ApiModelProperty(value = "状态码", dataType = "Integer", example = "200", position = 2)
     private Integer code;
     @ApiModelProperty(value = "描述信息", dataType = "String", position = 3)
     private String message;
-    @ApiModelProperty(value = "返回结果", dataType = "Object", position = 5)
-    private Object result;
+    @ApiModelProperty(value = "返回结果", dataType = "Object", position = 4)
+    private T result;
 
-    public BaseResponse() {
+    private BaseResponse() {
     }
 
-    public BaseResponse(ResponseStatusEnum status, Integer code, String message, Object result) {
+    private BaseResponse(ResponseStatus status, Integer code, String message, T result) {
         this.status = status;
         this.code = code;
         this.message = message;
@@ -36,19 +36,27 @@ public class BaseResponse {
      * @return default value is null
      */
     public static BaseResponse success() {
-        return new BaseResponse(ResponseStatusEnum.OK, EmBusinessError.SUCCESS.getErrCode(), EmBusinessError.SUCCESS.getErrMsg(), null);
+        return new BaseResponse(ResponseStatus.SUCCESS, EmBusinessError.SUCCESS.getErrCode(), EmBusinessError.SUCCESS.getErrMsg(), null);
     }
 
-    public BaseResponse success(Object data) {
-        return new BaseResponse(ResponseStatusEnum.OK, EmBusinessError.SUCCESS.getErrCode(), EmBusinessError.SUCCESS.getErrMsg(), data);
+    public static <T>BaseResponse success(T data) {
+        return new BaseResponse(ResponseStatus.SUCCESS, EmBusinessError.SUCCESS.getErrCode(), EmBusinessError.SUCCESS.getErrMsg(), data);
     }
 
     public static BaseResponse fail(EmBusinessError buzzError) {
-        return new BaseResponse(ResponseStatusEnum.ERR, buzzError.getErrCode(), buzzError.getErrMsg(), null);
+        return new BaseResponse(ResponseStatus.FAIL, buzzError.getErrCode(), buzzError.getErrMsg(), null);
     }
 
     public static BaseResponse fail(EmBusinessError buzzError, String errMsg) {
-        return new BaseResponse(ResponseStatusEnum.ERR, buzzError.getErrCode(), errMsg, null);
+        return new BaseResponse(ResponseStatus.FAIL, buzzError.getErrCode(), errMsg, null);
+    }
+
+    /**
+     * base response status.
+     */
+    enum ResponseStatus {
+        SUCCESS,
+        FAIL,
     }
 
 }

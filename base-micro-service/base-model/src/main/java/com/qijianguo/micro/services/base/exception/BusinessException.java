@@ -48,4 +48,8 @@ public class BusinessException extends RuntimeException implements CommonError {
         this.commonError.setErrorMsg(errorMsg);
         return this;
     }
+
+    public CommonError getCommonError() {
+        return commonError;
+    }
 }

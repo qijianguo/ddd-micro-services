@@ -5,9 +5,15 @@ package com.qijianguo.micro.services.base.exception;
  */
 public enum EmBusinessError implements CommonError {
 
-    UNKNOWN_ERROR(101, "unknown err"),
-    SUCCESS(200, "success"),
+    SUCCESS(200, "Success"),
+    UNKNOWN_ERROR(101, "Unknown error!"),
+    PARAMETER_ERROR(102, "Parameter error!"),
 
+    // USER：1000
+
+    // ACCOUNT: 2000
+
+    // ...
     ;
 
     private Integer errCode;
