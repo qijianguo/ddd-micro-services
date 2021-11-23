@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * @author qijianguo
@@ -22,7 +23,6 @@ public class PhoneCommitRequest {
 
     @ApiModelProperty(value = "验证码", dataType = "Integer", required = true, example = "1234")
     @Range(min = 1000, max = 9999, message = "请输入有效的验证码！")
-    @NotBlank(message = "验证码不能为空!")
     private Integer code;
 
 }

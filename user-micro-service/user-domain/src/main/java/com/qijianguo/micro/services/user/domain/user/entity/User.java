@@ -1,11 +1,16 @@
 package com.qijianguo.micro.services.user.domain.user.entity;
 
 import com.qijianguo.micro.services.user.domain.role.entity.Role;
+import lombok.Data;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * @author qijianguo
+ */
+@Data
 public class User {
 
     private Integer id;
@@ -18,17 +23,17 @@ public class User {
 
     private Integer age;
 
-    private Integer state;
+    private Status state;
 
     private Role role;
 
-    private Phone phone;
+    private String phone;
 
     private List<Auth> auths;
 
-    public User createUserInfo() {
-        return UserFactory.create();
-    }
+    private Date createTime;
+
+    private Date modifyTime;
 
     public void updateUserInfo(User user) {}
 
@@ -41,26 +46,6 @@ public class User {
     }
 
     /**
-     * 修改性别
-     * @param gender
-     */
-    public void updateGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    /**
-     * 修改手机
-     * @param phone
-     */
-    public void updatePhone(Phone phone) {
-        this.phone = phone;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    /**
      * 检查用户登录方式已绑定
      * @param userAuth
      * @return
@@ -69,12 +54,16 @@ public class User {
         AtomicBoolean atomicBoolean = new AtomicBoolean(true);
         if (!CollectionUtils.isEmpty(auths)) {
             auths.forEach(auth -> {
-                if (Objects.equals(userAuth.getUnionId(), auth.getUnionId())) {
+                if (Objects.equals(userAuth.getUnionKey(), auth.getUnionKey())) {
                     atomicBoolean.set(false);
                 }
             });
         }
         return atomicBoolean.get();
+    }
+
+    public void addAuth(Auth auth) {
+        auths.add(auth);
     }
 
     /**
@@ -87,6 +76,18 @@ public class User {
             auths = new ArrayList<>(1);
         }
         return auths.add(auth);
+    }
+
+    enum Status {
+        DELETED(-1),
+        NORMAL(0),
+        ;
+
+        int status;
+
+        Status(int status) {
+            this.status = status;
+        }
     }
 
     public static void main(String[] args) {

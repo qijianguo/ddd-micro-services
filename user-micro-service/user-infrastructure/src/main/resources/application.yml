@@ -5,7 +5,7 @@ spring:
   application:
     name: game-spring-cloud-web
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/db_game?useSSL=false&useUnicode=true&characterEncoding=UTF8&autoReconnect=true
+    url: jdbc:mysql://127.0.0.1:3306/user_micro_service?useSSL=false&useUnicode=true&characterEncoding=UTF8&autoReconnect=true
     username: root
     password: root123456
     driverClassName: com.mysql.jdbc.Driver
@@ -18,6 +18,18 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
       max-lifetime: 120000
+  jpa:
+    show-sql: true # 默认false，在日志里显示执行的sql语句
+    database: mysql
+    hibernate.ddl-auto: update #指定为update，每次启动项目检测表结构有变化的时候会新增字段，表不存在时会新建，如果指定create，则每次启动项目都会清空数据并删除表，再新建
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect # 使用JPA创建表时，默认使用的存储引擎是MyISAM，通过指定数据库版本，可以使用InnoDB
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      naming:
+        #指定jpa的自动表生成策略，驼峰自动映射为下划线格式
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
   redis:
     database: 0
     host: localhost

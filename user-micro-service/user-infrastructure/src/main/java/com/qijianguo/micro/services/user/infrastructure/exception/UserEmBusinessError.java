@@ -5,11 +5,11 @@ import com.qijianguo.micro.services.base.exception.CommonError;
 /**
  * @author qijianguo
  */
-public enum UserEmBusinessError implements CommonError {
+public enum UserEmBusinessError implements CommonError{
 
-    CODE_REQ_PHONE_REQ_FREQUENCY(1000, "验证码请求频繁，请在%d秒后再试."),
-    CODE_REQ_MAX_COUNTS(1001, "验证码请求频繁，超出每日请求次数.");
-
+    CODE_REQ_PHONE_REQ_FREQUENCY(1000, "验证码请求频繁."),
+    CODE_REQ_MAX_COUNTS(1001, "验证码请求频繁，超出每日请求次数."),
+    CODE_EXPIRED(1002, "验证码错误或已过期.")
     ;
 
     private Integer errCode;
@@ -32,8 +32,7 @@ public enum UserEmBusinessError implements CommonError {
     }
 
     @Override
-    public CommonError setErrorMsg(String errorMsg) {
+    public void setErrorMsg(String errorMsg) {
         this.errMsg = errorMsg;
-        return this;
     }
 }

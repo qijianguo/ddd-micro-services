@@ -1,7 +1,6 @@
 package com.qijianguo.micro.services.user.domain.user.entity;
 
 import com.qijianguo.micro.services.base.exception.BusinessException;
-import com.qijianguo.micro.services.base.exception.EmBusinessError;
 import com.qijianguo.micro.services.base.libs.util.TimeUtils;
 import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
 import com.qijianguo.micro.services.user.infrastructure.util.RandomUtils;
@@ -42,23 +41,25 @@ public class Phone {
 
     public boolean verifyPhoneCode() {
         // 不允许重复请求
-        long now = System.currentTimeMillis();
-        long i = now - Config.LIMITED.getMilliTime() - modifyTime.getTime();
+        Date now = new Date();
+        long i = now.getTime() - Config.LIMITED.getMilliTime() - modifyTime.getTime();
         if (i <= 0) {
-            throw new BusinessException(UserEmBusinessError.CODE_REQ_PHONE_REQ_FREQUENCY, String.format(UserEmBusinessError.CODE_REQ_PHONE_REQ_FREQUENCY.getErrMsg(), (int) (i / 1000)));
+            String format = String.format("验证码获取频繁, 请在%d秒后重试.", (int) (i * -1 / 1000) );
+            throw new BusinessException(UserEmBusinessError.CODE_REQ_PHONE_REQ_FREQUENCY, format);
         }
         // 限制请求次数
         try {
-            if (createTime.after(TimeUtils.convertDate2Date(new Date(), TimeUtils.YYYY_HH_MM_00_00_00)) && count > Config.DAY_LIMITED.num) {
-                throw new BusinessException(UserEmBusinessError.CODE_REQ_MAX_COUNTS);
-            } else {
-                modifyTime = createTime = new Date();
+            if (createTime.before(TimeUtils.convertDate2Date(now, TimeUtils.YYYY_HH_MM_00_00_00))) {
+                createTime = new Date();
                 code = null;
-                count = 1;
+                count = 0;
+            } else if (count > Config.DAY_LIMITED.num){
+                throw new BusinessException(UserEmBusinessError.CODE_REQ_MAX_COUNTS);
             }
         } catch (ParseException e) {
             throw new IllegalArgumentException(e);
         }
+        this.modifyTime = new Date();
         return true;
     }
 
