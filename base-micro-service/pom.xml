@@ -6,7 +6,7 @@
 
     <groupId>com.qijianguo.micro.services</groupId>
     <artifactId>base-micro-service</artifactId>
-    <version>1.0.10-RELEASE</version>
+    <version>1.0.19-RELEASE</version>
 
     <packaging>pom</packaging>
 
@@ -75,12 +75,12 @@
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-model</artifactId>
-                <version>1.0.10-RELEASE</version>
+                <version>1.0.19-RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-libs</artifactId>
-                <version>1.0.10-RELEASE</version>
+                <version>1.0.19-RELEASE</version>
             </dependency>
 
             <dependency>
@@ -95,6 +95,12 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
 

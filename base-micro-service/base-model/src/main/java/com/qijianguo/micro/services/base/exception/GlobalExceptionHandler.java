@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 
 /**
- * @author qijianguo
  * 异常信息统一处理
+ * @author qijianguo
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public BaseResponse businessExceptionHandler(BusinessException e) {
-        return BaseResponse.fail(((EmBusinessError) e.getCommonError()));
+        return BaseResponse.fail(e);
     }
 
     /**
@@ -86,6 +86,5 @@ public class GlobalExceptionHandler {
     public BaseResponse parameterBodyMissingExceptionHandler(HttpMessageNotReadableException e) {
         return BaseResponse.fail(EmBusinessError.PARAMETER_ERROR, "参数不能为空!");
     }
-
 
 }

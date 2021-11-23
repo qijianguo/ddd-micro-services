@@ -5,9 +5,9 @@ package com.qijianguo.micro.services.base.exception;
  */
 public enum EmBusinessError implements CommonError {
 
-    SUCCESS(200, "Success"),
-    UNKNOWN_ERROR(101, "Unknown error!"),
-    PARAMETER_ERROR(102, "Parameter error!"),
+    SUCCESS(200, "请求成功"),
+    UNKNOWN_ERROR(101, "未知错误，请重试!"),
+    PARAMETER_ERROR(102, "参数错误!"),
 
     // USER：1000
 
@@ -36,8 +36,7 @@ public enum EmBusinessError implements CommonError {
     }
 
     @Override
-    public CommonError setErrorMsg(String errorMsg) {
+    public void setErrorMsg(String errorMsg) {
         this.errMsg = errorMsg;
-        return this;
     }
 }

@@ -2,10 +2,6 @@ package com.qijianguo.micro.services.base.exception;
 
 /**
  * @author qijianguo
- * @version 1.0
- * @Title: BusinessException
- * @Description: TODO 包装器业务异常类实现
- * @date 2019/2/16 12:51
  */
 public class BusinessException extends RuntimeException implements CommonError {
 
@@ -30,7 +26,8 @@ public class BusinessException extends RuntimeException implements CommonError {
     public BusinessException(CommonError commonError, String errorMsg) {
         super();
         this.commonError = commonError;
-        this.commonError = setErrorMsg(errorMsg);
+        setErrorMsg(errorMsg);
+
     }
 
     @Override
@@ -44,12 +41,8 @@ public class BusinessException extends RuntimeException implements CommonError {
     }
 
     @Override
-    public CommonError setErrorMsg(String errorMsg) {
+    public void setErrorMsg(String errorMsg) {
         this.commonError.setErrorMsg(errorMsg);
-        return this;
     }
 
-    public CommonError getCommonError() {
-        return commonError;
-    }
 }
