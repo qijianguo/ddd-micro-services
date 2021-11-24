@@ -17,14 +17,19 @@ import java.util.List;
  */
 public class TimeUtils {
 
-    public static final String YYYY_HH_MM_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+    public static final String YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
     public static final String YYYYHHMMHHMMSS = "yyyyMMddHHmmss";
+
+    public static final String YYYY_HH_MM_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+    public static final String YYYY_HH_MM_HH_MM_00 = "yyyy-MM-dd HH:mm:00";
+    public static final String YYYY_HH_MM_HH_00_00 = "yyyy-MM-dd HH:00:00";
     public static final String YYYY_HH_MM_00_00_00 = "yyyy-MM-dd 00:00:00";
-    public static final String TIME_STAMP_PATTERN = "yyyyMMddHHmmssSSS";
+
     public static final String YYYY_HH_MM = "yyyy-MM-dd";
     public static final String YYYY_HH = "yyyy-MM";
     public static final String YYYYHHMM = "yyyyMMdd";
     public static final String YYYYHH = "yyyyMM";
+
 
     public static LocalDateTime convertDate2LocalDateTime(Date date) {
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
@@ -39,9 +44,6 @@ public class TimeUtils {
     }
 
     public static Date convertString2Date(String text, String pattern) throws ParseException {
-        if ("1970-01-01 08:00:00".equals(text)) {
-            text = "1970-01-01 08:00:01";
-        }
         return new SimpleDateFormat(pattern).parse(text);
     }
 
@@ -114,14 +116,12 @@ public class TimeUtils {
     /**
      * 获取当前日期（yyyy-MM-dd）
      */
-    public static String getCurrentDate() {
+    public static String today() {
         SimpleDateFormat format = new SimpleDateFormat(YYYY_HH_MM);
-        Date date = new Date();
-        String currentDate = format.format(date);
-        return currentDate;
+        return format.format(new Date());
     }
 
-    public static String minusMinutes(Integer minute, String time) {
+    public static String before(Integer minute, String time) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern(YYYY_HH_MM_HH_MM_SS);
         LocalDateTime ldt = LocalDateTime.parse(time, df).minusMinutes(minute);
         return df.format(ldt);
@@ -261,7 +261,7 @@ public class TimeUtils {
 
     }
 
-    public static List<LocalDate> getLatestWeek() {
+    public static List<LocalDate> latestWeek() {
         List<LocalDate> calendars = new ArrayList<>();
         LocalDate now = LocalDate.now();
         LocalDate localDate = now.plusDays(7 - now.getDayOfWeek().getValue());
@@ -269,6 +269,10 @@ public class TimeUtils {
             calendars.add(localDate.minusDays(i));
         }
         return calendars;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(latestWeek());
     }
 
     public static boolean nowBetweenTime(Date startTime, Date endTime) {
@@ -279,7 +283,7 @@ public class TimeUtils {
         return false;
     }
 
-    public static String time(Date startTime, Date endTime) {
+    public static String diff(Date startTime, Date endTime) {
         // 获得两个时间的毫秒时间差异
         long diff = endTime.getTime() - startTime.getTime();
         StringBuilder sb = new StringBuilder();

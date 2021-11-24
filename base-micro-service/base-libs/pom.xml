@@ -5,11 +5,11 @@
     <parent>
         <artifactId>base-micro-service</artifactId>
         <groupId>com.qijianguo.micro.services</groupId>
-        <version>1.0.19-RELEASE</version>
+        <version>1.0.20-RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <version>1.0.19-RELEASE</version>
+    <version>1.0.20-RELEASE</version>
 
     <artifactId>base-libs</artifactId>
 
@@ -23,6 +23,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xmlpull</groupId>
+            <artifactId>xmlpull</artifactId>
         </dependency>
     </dependencies>
 

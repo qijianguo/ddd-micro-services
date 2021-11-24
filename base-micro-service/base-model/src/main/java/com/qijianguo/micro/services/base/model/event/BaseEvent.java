@@ -1,70 +1,27 @@
 package com.qijianguo.micro.services.base.model.event;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
  * Root of Event
  * @author qijianguo
  */
+@Data
 public class BaseEvent<T> {
 
-    private Long eventId;
+    /** 事件ID */
+    private String id;
 
     private String eventType;
 
-    private Long aggregateId;
+    private String aggregateId;
 
     private String aggregateType;
 
     private T eventPayload;
 
-    private Date occuredOn;
+    private Date createTime;
 
-    public Long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public Long getAggregateId() {
-        return aggregateId;
-    }
-
-    public void setAggregateId(Long aggregateId) {
-        this.aggregateId = aggregateId;
-    }
-
-    public String getAggregateType() {
-        return aggregateType;
-    }
-
-    public void setAggregateType(String aggregateType) {
-        this.aggregateType = aggregateType;
-    }
-
-    public T getEventPayload() {
-        return eventPayload;
-    }
-
-    public void setEventPayload(T eventPayload) {
-        this.eventPayload = eventPayload;
-    }
-
-    public Date getOccuredOn() {
-        return occuredOn;
-    }
-
-    public void setOccuredOn(Date occuredOn) {
-        this.occuredOn = occuredOn;
-    }
 }

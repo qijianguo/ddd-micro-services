@@ -219,27 +219,4 @@ public class RegexUtils {
         return ret.matches(CONTAIN_LETTER_REGEX);
     }
 
-    /**
-     * 修剪简介
-     * @param summary
-     * @return
-     */
-    public static String replace(String summary) {
-        if (summary != null) {
-            summary = summary.replace(" ", "").replace("　", "").replace("\r\n", "   ").replace("\n", "   ");
-            if (summary.length() > 50) {
-                summary = summary.substring(0, 50);
-                int length = summary.length();
-                for (int i = length - 1; i > 0; i--) {
-                    char c = summary.charAt(i);
-                    if (!checkPunctuation(String.valueOf(c))) {
-                        summary = summary.substring(0, i + 1) + "...";
-                        break;
-                    }
-                }
-            }
-        }
-        return summary;
-    }
-
 }
