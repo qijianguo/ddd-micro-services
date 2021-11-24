@@ -2,9 +2,7 @@ package com.qijianguo.micro.services.user.domain.user.repository.po;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -13,23 +11,24 @@ import java.util.Date;
 public class UserPo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column(name = "nick_name", length = 20)
     private String nickName;
-
+    @Column
     private String avatar;
-
+    @Column
     private Integer gender;
-
+    @Column
     private Integer age;
-
+    @Column
     private Integer state;
-
+    @Column
     private Integer role;
-
+    @Column
     private String phone;
-
+    @Column
     private Date createTime;
-
+    @Column
     private Date modifyTime;
 }

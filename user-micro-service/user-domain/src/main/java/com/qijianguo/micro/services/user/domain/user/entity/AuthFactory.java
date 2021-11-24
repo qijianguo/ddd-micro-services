@@ -3,7 +3,7 @@ package com.qijianguo.micro.services.user.domain.user.entity;
 import com.qijianguo.micro.services.user.domain.user.repository.po.AuthPo;
 import org.springframework.beans.BeanUtils;
 
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author qijianguo
@@ -34,5 +34,10 @@ public class AuthFactory {
         return auth;
     }
 
+    public static List<Auth> toDOs(List<AuthPo> authPos) {
+        List<Auth> list = new ArrayList<>();
+        Optional.ofNullable(authPos).orElse(Collections.emptyList()).forEach(po -> list.add(AuthFactory.toDO(po)));
+        return list;
+    }
 
 }

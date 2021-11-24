@@ -1,5 +1,6 @@
 package com.qijianguo.micro.services.user.infrastructure.config;
 
+import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,8 @@ import java.util.List;
  * @author qijianguo
  */
 @Configuration
+@EnableSwagger2
+@EnableSwaggerBootstrapUI
 //@ConditionalOnProperty(prefix = "swagger",value = {"basic.enable"},havingValue = "true")
 public class SwaggerConfig {
 

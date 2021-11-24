@@ -1,6 +1,7 @@
 package com.qijianguo.micro.services.user.interfaces.assembler;
 
 import com.qijianguo.micro.services.user.domain.user.entity.Phone;
+import com.qijianguo.micro.services.user.domain.user.entity.PhonePolicy;
 import com.qijianguo.micro.services.user.interfaces.dto.PhoneCodeRequest;
 import com.qijianguo.micro.services.user.interfaces.dto.PhoneCodeResponse;
 import com.qijianguo.micro.services.user.interfaces.dto.PhoneCommitRequest;
@@ -14,6 +15,7 @@ public class PhoneAssembler {
         phone.setPhone(request.getPhone());
         phone.setCreateTime(new Date());
         phone.setModifyTime(new Date());
+        phone.setCaptcha(request.getCaptcha());
         phone.setCount(0);
         return phone;
     }
@@ -25,7 +27,7 @@ public class PhoneAssembler {
     }
 
     public static PhoneCodeResponse toDTO(Phone phone) {
-        PhoneCodeResponse response = new PhoneCodeResponse(Phone.Config.LIMITED.getNum());
+        PhoneCodeResponse response = new PhoneCodeResponse(PhonePolicy.Config.LIMITED.getNum());
         return response;
     }
 }

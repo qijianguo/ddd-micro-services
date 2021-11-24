@@ -29,5 +29,4 @@ public class UserController {
         return BaseResponse.success(save);
     }
 
-
 }

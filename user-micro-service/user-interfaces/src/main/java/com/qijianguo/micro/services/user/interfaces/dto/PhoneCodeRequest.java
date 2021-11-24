@@ -20,5 +20,7 @@ public class PhoneCodeRequest {
     @Length(min = 11, max = 11, message = "手机号不正确!")
     @NotBlank(message = "手机号不能为空!")
     private String phone;
+    @ApiModelProperty(value = "图片验证码（选填）", dataType = "String", example = "a1b2")
+    private String captcha;
 
 }

@@ -35,12 +35,6 @@ public class User {
 
     private Date modifyTime;
 
-    public void updateUserInfo(User user) {}
-
-    public User getUserInfo() {
-        return null;
-    }
-
     public long generateUserId() {
         return 0L;
     }

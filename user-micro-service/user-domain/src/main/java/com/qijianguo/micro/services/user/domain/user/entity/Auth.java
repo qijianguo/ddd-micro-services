@@ -12,8 +12,6 @@ import java.util.Date;
 @Data
 public class Auth {
 
-    private Integer id;
-
     private Integer userId;
 
     private Type type;

@@ -25,7 +25,7 @@ import org.springframework.util.Assert;
 
 import java.util.Date;
 
-import static com.qijianguo.micro.services.user.domain.user.entity.Phone.Config.EXPIRED;
+import static com.qijianguo.micro.services.user.domain.user.entity.PhonePolicy.Config.EXPIRED;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringRunner.class)

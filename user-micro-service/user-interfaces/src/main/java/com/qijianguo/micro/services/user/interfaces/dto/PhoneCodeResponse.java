@@ -14,6 +14,9 @@ import lombok.Data;
 @Data
 public class PhoneCodeResponse {
 
+    @ApiModelProperty(value = "图片验证码")
+    private byte[] captcha;
+
     @ApiModelProperty(value = "倒计时")
     private Integer countdown;
 

@@ -1,6 +1,5 @@
 package com.qijianguo.micro.services.user.domain.user.repository.po;
 
-import com.qijianguo.micro.services.user.domain.user.entity.Auth;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import java.util.Date;
 public class AuthPo {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "user_id", length = 11)
     private Integer userId;

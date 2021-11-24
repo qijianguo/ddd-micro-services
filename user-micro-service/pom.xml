@@ -57,7 +57,7 @@
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-micro-service</artifactId>
-                <version>1.0.19-RELEASE</version>
+                <version>1.0.20-RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
