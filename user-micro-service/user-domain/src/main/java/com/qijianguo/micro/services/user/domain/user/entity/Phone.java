@@ -13,32 +13,37 @@ import java.util.Date;
 public class Phone {
 
     /** 手机号 */
-    private String phone;
+    private String number;
     /** 创建时间 */
     private Date createTime;
     /** 最近修改时间 */
     private Date modifyTime;
     /**
      * 请求次数：每日的会累计
-     * 当判断创建时间早于今天，则重置count
+     * modifyTime.before(today) -> reset count
      */
     private Integer count;
     /** 验证码 */
     private Integer code;
-    /** 图片校验码 */
-    private String captcha;
 
-    private boolean verify = false;
+    private byte[] captchaImage;
 
+    /**
+     * 手机号安全等级
+     */
     private Level level = Level.NORMAL;
 
-    /** 创建手机验证码 */
-    public void createCode() {
+    /** 刷新手机验证码 */
+    public void updateCode() {
         int defLen = 4;
-        createCode(defLen);
+        updateCode(defLen);
     }
 
-    public void createCode(int length) {
+    /**
+     * 创建指定长度的数字验证码
+     * @param length
+     */
+    public void updateCode(int length) {
         code = RandomUtils.secureRandomNum(length);
         count ++;
     }
@@ -51,11 +56,11 @@ public class Phone {
         if (phone == null) {
             return false;
         }
-        return phone.getPhone().equals(this.phone) && phone.getCode().equals(code);
+        return phone.getNumber().equals(this.number) && phone.getCode().equals(code);
     }
 
     public String generateKey() {
-        return RedisKey.CAPTCHA_CODE(phone);
+        return RedisKey.CAPTCHA_CODE(number);
     }
 
     public static String generateKey(String phone) {

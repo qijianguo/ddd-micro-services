@@ -11,7 +11,8 @@ public enum UserEmBusinessError implements CommonError{
     CODE_REQ_MAX_COUNTS(1001, "验证码请求频繁，超出每日请求次数."),
     CODE_EXPIRED(1002, "验证码错误或已过期."),
 
-    CAPTCHA_ERROR(1003, "图片验证码错误"),
+    CAPTCHA_IMG_ERROR(1003, "图片验证码错误"),
+    CAPTCHA_TYPE_NOT_SUPPORT(1003, "验证码类型不支持"),
 
 
 

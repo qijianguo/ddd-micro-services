@@ -1,42 +1,48 @@
 package com.qijianguo.micro.services.user.application.service;
 
+import com.qijianguo.micro.services.base.exception.BusinessException;
+import com.qijianguo.micro.services.user.domain.user.entity.Captcha;
+import com.qijianguo.micro.services.user.domain.user.entity.Phone;
+import com.qijianguo.micro.services.user.domain.user.service.CaptchaDomainService;
+import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import java.util.concurrent.TimeUnit;
+import org.springframework.stereotype.Service;
 
 /**
  * @author qijianguo
  */
-public abstract class CaptchaAppService<T, K> {
+@Service
+public class CaptchaAppService {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private CaptchaDomainService imageCaptchaDomainService;
+    @Autowired
+    private CaptchaDomainService phoneCaptchaDomainService;
 
-    /**
-     * 创建验证码
-     * @param key 验证码的唯一键，作为缓存的KEY
-     * @return 创建后需要返回的数据
-     */
-    public abstract K create(String key);
-
-    /**
-     * 验证码校验
-     * @param key 验证码的唯一键，作为缓存的KEY
-     * @param value 验证码的值
-     */
-    public abstract void validate(String key, String value);
-
-    T pullFromCache(String key) {
-        return (T) redisTemplate.opsForValue().get(key);
+    public Object create(Captcha captcha) {
+        switch (captcha.getType()) {
+            case PHONE:
+                return phoneCaptchaDomainService.create(captcha);
+            case IMAGE:
+                return imageCaptchaDomainService.create(captcha);
+            case MAIL:
+                break;
+        }
+        throw new BusinessException(UserEmBusinessError.CAPTCHA_TYPE_NOT_SUPPORT);
     }
 
-    void putInCache(String key, T t) {
-        redisTemplate.opsForValue().set(key, t, 60, TimeUnit.SECONDS);
+    public void validate(Captcha captcha) {
+        switch (captcha.getType()) {
+            case PHONE:
+                phoneCaptchaDomainService.commit(captcha);
+                return;
+            case IMAGE:
+                imageCaptchaDomainService.commit(captcha);
+                return;
+            case MAIL:
+                break;
+        }
+        throw new BusinessException(UserEmBusinessError.CAPTCHA_TYPE_NOT_SUPPORT);
     }
-
-    void clearCache(String key) {
-        redisTemplate.delete(key);
-    }
-
 
 }

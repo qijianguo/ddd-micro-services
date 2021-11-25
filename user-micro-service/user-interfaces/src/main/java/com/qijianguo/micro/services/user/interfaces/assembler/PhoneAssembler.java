@@ -2,27 +2,26 @@ package com.qijianguo.micro.services.user.interfaces.assembler;
 
 import com.qijianguo.micro.services.user.domain.user.entity.Phone;
 import com.qijianguo.micro.services.user.domain.user.entity.PhonePolicy;
-import com.qijianguo.micro.services.user.interfaces.dto.PhoneCodeRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneCodeRequest;
 import com.qijianguo.micro.services.user.interfaces.dto.PhoneCodeResponse;
-import com.qijianguo.micro.services.user.interfaces.dto.PhoneCommitRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneCommitRequest;
 
 import java.util.Date;
 
 public class PhoneAssembler {
 
-    public static Phone toDO(PhoneCodeRequest request) {
+    public static Phone toDO(CaptchaPhoneCodeRequest request) {
         Phone phone = new Phone();
-        phone.setPhone(request.getPhone());
+        phone.setNumber(request.getPhone());
         phone.setCreateTime(new Date());
         phone.setModifyTime(new Date());
-        phone.setCaptcha(request.getCaptcha());
         phone.setCount(0);
         return phone;
     }
 
-    public static Phone toDO(PhoneCommitRequest request) {
+    public static Phone toDO(CaptchaPhoneCommitRequest request) {
         Phone phone = new Phone();
-        phone.setPhone(request.getPhone());
+        phone.setNumber(request.getPhone());
         return phone;
     }
 

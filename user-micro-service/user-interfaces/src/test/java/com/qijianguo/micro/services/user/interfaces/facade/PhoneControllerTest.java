@@ -5,7 +5,7 @@ import com.qijianguo.micro.services.base.libs.util.TimeUtils;
 import com.qijianguo.micro.services.user.domain.user.entity.Phone;
 import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
 import com.qijianguo.micro.services.user.interfaces.assembler.PhoneAssembler;
-import com.qijianguo.micro.services.user.interfaces.dto.PhoneCodeRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneCodeRequest;
 import net.minidev.json.JSONValue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +42,7 @@ public class PhoneControllerTest {
 
     @Test
     public void phoneCode() throws Exception {
-        PhoneCodeRequest request = new PhoneCodeRequest();
+        CaptchaPhoneCodeRequest request = new CaptchaPhoneCodeRequest();
         request.setPhone("12345678901");
         // 正常请求
         ResultActions result = phoneCode(request);
@@ -90,7 +90,7 @@ public class PhoneControllerTest {
 
     }
 
-    private ResultActions phoneCode(PhoneCodeRequest request) throws Exception {
+    private ResultActions phoneCode(CaptchaPhoneCodeRequest request) throws Exception {
         String paramJson = JSONValue.toJSONString(request);
         logger.info("params: {}", paramJson);
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders
