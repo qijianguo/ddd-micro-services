@@ -1,6 +1,6 @@
 package com.qijianguo.micro.services.user.application.event.publish;
 
-import com.qijianguo.micro.services.user.domain.user.entity.Phone;
+import com.qijianguo.micro.services.user.domain.captcha.entity.Phone;
 import org.springframework.stereotype.Service;
 
 /**

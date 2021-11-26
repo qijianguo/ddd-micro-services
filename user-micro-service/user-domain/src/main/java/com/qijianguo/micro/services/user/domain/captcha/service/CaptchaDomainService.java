@@ -1,6 +1,6 @@
-package com.qijianguo.micro.services.user.domain.user.service;
+package com.qijianguo.micro.services.user.domain.captcha.service;
 
-import com.qijianguo.micro.services.user.domain.user.entity.Captcha;
+import com.qijianguo.micro.services.user.domain.captcha.entity.Captcha;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -12,12 +12,10 @@ import java.util.concurrent.TimeUnit;
  *
  * @param <T> 服务端保存的数据对象，用于后期校验用户的提交信息是否正确
  *           （例如：图片验证码的文字内容）
- * @param <K> 返回给用户展示层的数据
- *           （例如：图片验证码）
  *
  * @author qijianguo
  */
-public abstract class CaptchaDomainService <T, K> {
+public abstract class CaptchaDomainService <T> {
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -25,7 +23,7 @@ public abstract class CaptchaDomainService <T, K> {
     /**
      * 创建验证码
      */
-    public abstract K create(Captcha captcha);
+    public abstract void create(Captcha captcha);
 
     /**
      * 验证码校验
@@ -62,6 +60,16 @@ public abstract class CaptchaDomainService <T, K> {
     void saveToCache(String key, T t) {
         redisTemplate.opsForValue().set(key, t, 60, TimeUnit.SECONDS);
     }
+
+    /**
+     * 保存到缓存
+     * @param key 关键字
+     * @param t 数据对象
+     */
+    void saveToCache(String key, T t, int seconds) {
+        redisTemplate.opsForValue().set(key, t, seconds, TimeUnit.SECONDS);
+    }
+
 
     /**
      * 清除缓存

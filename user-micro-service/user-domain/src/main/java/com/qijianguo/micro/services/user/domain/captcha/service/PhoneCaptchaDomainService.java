@@ -1,10 +1,8 @@
-package com.qijianguo.micro.services.user.domain.user.service;
+package com.qijianguo.micro.services.user.domain.captcha.service;
 
 import com.qijianguo.micro.services.base.exception.BusinessException;
 import com.qijianguo.micro.services.base.libs.service.SmsService;
-import com.qijianguo.micro.services.user.domain.user.entity.Captcha;
-import com.qijianguo.micro.services.user.domain.user.entity.Phone;
-import com.qijianguo.micro.services.user.domain.user.entity.PhoneFactory;
+import com.qijianguo.micro.services.user.domain.captcha.entity.*;
 import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
 import com.qijianguo.micro.services.user.infrastructure.util.RedisKey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,7 @@ import org.springframework.util.StringUtils;
  * @author qijianguo
  */
 @Service("phoneCaptchaDomainService")
-public class PhoneCaptchaDomainService extends CaptchaDomainService<Phone, Phone> {
+public class PhoneCaptchaDomainService extends CaptchaDomainService<Phone> {
 
     @Autowired
     private SmsService smsService;
@@ -23,23 +21,22 @@ public class PhoneCaptchaDomainService extends CaptchaDomainService<Phone, Phone
     private CaptchaDomainService imageCaptchaDomainService;
 
     @Override
-    public Phone create(Captcha captcha) {
-        Phone phone = validateAndMerge(PhoneFactory.create(captcha.getKey()));
+    public void create(Captcha captcha) {
+        Phone phone = validateAndMerge(captcha);
 
         phone.updateCode();
 
-        saveToCache(phone.generateKey(), phone);
+        saveToCache(phone.generateKey(), phone, 86400);
 
-        valid(captcha, phone);
+        captcha.setPhone(phone);
 
-        // captchaEventPublish.publish(phone);
         smsService.sendVerifyCode(phone.getNumber(), String.valueOf(phone.getCode()));
-        return phone;
     }
 
     @Override
     public void commit(Captcha captcha) {
-        Phone phone = PhoneFactory.createSimple(captcha.getKey(), Integer.parseInt(captcha.getValue()));
+        Phone phone = captcha.getPhone();
+
         Phone fromCache = getFromCache(phone.generateKey());
         if (fromCache == null || !fromCache.compareTo(phone)) {
             throw new BusinessException(UserEmBusinessError.CODE_EXPIRED);
@@ -47,22 +44,23 @@ public class PhoneCaptchaDomainService extends CaptchaDomainService<Phone, Phone
         clearCache(phone.generateKey());
     }
 
-    private Phone validateAndMerge(Phone phone) {
-        Phone cache = getFromCache(phone.generateKey());
+    private Phone validateAndMerge(Captcha captcha) {
+        Phone cache = getFromCache(captcha.getPhone().generateKey());
         if (cache != null) {
             cache.verifyPhoneCode();
+            safeVerify(captcha, cache);
             return cache;
         }
-        return phone;
+        return captcha.getPhone();
     }
 
-    private void valid(Captcha captcha, Phone phone) {
+    private void safeVerify(Captcha captcha, Phone cache) {
         // 验证
-        if (phone.getLevel() == Phone.Level.LOWER) {
-            Captcha subCaptcha = captcha.getSubCaptcha();
-            if (subCaptcha == null || StringUtils.isEmpty(subCaptcha.getValue())
-                    || !compareTo(subCaptcha.getValue(),
-                    (String)imageCaptchaDomainService.getFromCacheAndClearCache(RedisKey.CAPTCHA_IMG(subCaptcha.getKey())))
+        if (cache.getLevel() == Phone.Level.LOWER) {
+            Image image = captcha.getImage();
+            if (image == null || StringUtils.isEmpty(image.getWords())
+                    || !compareTo(image.getWords(),
+                    (String)imageCaptchaDomainService.getFromCacheAndClearCache(RedisKey.CAPTCHA_IMG(image.getKey())))
             ) {
                 throw new BusinessException(UserEmBusinessError.CAPTCHA_IMG_ERROR);
             }

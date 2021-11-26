@@ -1,5 +1,7 @@
-package com.qijianguo.micro.services.user.domain.user.entity;
+package com.qijianguo.micro.services.user.domain.captcha.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.qijianguo.micro.services.base.libs.util.RandomUtils;
 import com.qijianguo.micro.services.user.infrastructure.util.RedisKey;
 import lombok.Data;
@@ -10,6 +12,7 @@ import java.util.Date;
  * @author qijianguo
  */
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Phone {
 
     /** 手机号 */
@@ -25,9 +28,6 @@ public class Phone {
     private Integer count;
     /** 验证码 */
     private Integer code;
-
-    private byte[] captchaImage;
-
     /**
      * 手机号安全等级
      */
@@ -46,6 +46,11 @@ public class Phone {
     public void updateCode(int length) {
         code = RandomUtils.secureRandomNum(length);
         count ++;
+        // captcha 校验
+        if (count > PhonePolicy.Config.CAPTCHA_VERIFY.getNum()) {
+            this.level = Phone.Level.LOWER;
+        }
+        modifyTime = new Date();
     }
 
     public boolean verifyPhoneCode() {

@@ -1,4 +1,4 @@
-package com.qijianguo.micro.services.user.domain.user.entity;
+package com.qijianguo.micro.services.user.domain.captcha.entity;
 
 import com.qijianguo.micro.services.base.exception.BusinessException;
 import com.qijianguo.micro.services.base.libs.util.TimeUtils;
@@ -26,15 +26,11 @@ public class PhonePolicy {
         try {
             if (phone.getCreateTime().before(TimeUtils.convertDate2Date(now, TimeUtils.YYYY_HH_MM_00_00_00))) {
                 reset(phone);
-            } else if (phone.getCount() > Config.DAY_LIMITED.num){
+            } else if (phone.getCount() >= Config.DAY_LIMITED.num){
                 throw new BusinessException(UserEmBusinessError.CODE_REQ_MAX_COUNTS);
             }
         } catch (ParseException e) {
             throw new IllegalArgumentException(e);
-        }
-        // captcha 校验
-        if (phone.getCount() >= Config.CAPTCHA_VERIFY.num) {
-            phone.setLevel(Phone.Level.LOWER);
         }
         phone.setCreateTime(new Date());
         return true;
@@ -52,7 +48,7 @@ public class PhonePolicy {
         /** 验证码过期时间: 5 分钟 */
         EXPIRED(300, TimeUnit.SECONDS),
         /** 验证码请求限制： 1 分钟 */
-        LIMITED(1, TimeUnit.SECONDS),
+        LIMITED(10, TimeUnit.SECONDS),
         /*----------------------------------*/
         /** 验证码请求限制： 1 分钟 */
         SEC_LIMITED(1),
