@@ -108,4 +108,6 @@
 
 ---
 ## 资料
-[《结构领域驱动设计》张逸](https://book.douban.com/subject/35553520/)
+[《领域驱动设计：软件核心复杂应对之道》 Eric Evans](https://book.douban.com/subject/26819666/)
+
+[《结构领域驱动设计》 张逸](https://book.douban.com/subject/35553520/)
