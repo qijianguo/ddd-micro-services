@@ -30,9 +30,9 @@ public class GenerateAsymmetricMasterKey {
         KeyPair loaded = loadKeyPair(keyDir, "RSA");
 
         // Sanity check
-        Assert.isTrue(Arrays.equals(keypair.getPublic().getEncoded(), loaded.getPublic().getEncoded()));
+        Assert.isTrue(Arrays.equals(keypair.getPublic().getEncoded(), loaded.getPublic().getEncoded()), "");
 
-        Assert.isTrue(Arrays.equals(keypair.getPrivate().getEncoded(), loaded.getPrivate().getEncoded()));
+        Assert.isTrue(Arrays.equals(keypair.getPrivate().getEncoded(), loaded.getPrivate().getEncoded()), "");
 
     }
 

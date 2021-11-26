@@ -33,7 +33,7 @@ public class GenerateSymmetricMasterKey {
 
         //Load key.
         SecretKey symKeyLoaded = loadSymmetricAESKey(keyDir, "AES");
-        Assert.isTrue(Arrays.equals(symKey.getEncoded(), symKeyLoaded.getEncoded()));
+        Assert.isTrue(Arrays.equals(symKey.getEncoded(), symKeyLoaded.getEncoded()), "");
 
     }
 
