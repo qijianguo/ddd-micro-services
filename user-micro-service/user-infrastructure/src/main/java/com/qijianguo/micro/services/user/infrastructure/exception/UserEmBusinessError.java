@@ -12,8 +12,9 @@ public enum UserEmBusinessError implements CommonError{
     CODE_EXPIRED(1002, "验证码错误或已过期."),
 
     CAPTCHA_IMG_ERROR(1003, "图片验证码错误"),
-    CAPTCHA_TYPE_NOT_SUPPORT(1003, "验证码类型不支持"),
-
+    CAPTCHA_TYPE_NOT_SUPPORT(1004, "验证码类型不支持"),
+    CAPTCHA_TOKEN_NOT_INIT(1005, "Token未初始化"),
+    TOKEN_EXPIRED(1006, "Token失效.")
 
 
 

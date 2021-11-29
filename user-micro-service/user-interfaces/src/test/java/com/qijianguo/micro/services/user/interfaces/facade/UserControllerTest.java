@@ -7,8 +7,8 @@ import com.qijianguo.micro.services.user.domain.captcha.entity.Captcha;
 import com.qijianguo.micro.services.user.domain.captcha.entity.Phone;
 import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
 import com.qijianguo.micro.services.user.interfaces.assembler.CaptchaAssembler;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneCodeRequest;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneCommitRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneVerifyRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +41,8 @@ public class UserControllerTest {
         result.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(EmBusinessError.SUCCESS.getErrCode()))
         ;
+
+
         // 重复请求
         ResultActions repeatResult = byPhone(p);
         repeatResult.andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -50,7 +52,7 @@ public class UserControllerTest {
     }
 
     private Phone initPhoneCode() {
-        CaptchaPhoneCodeRequest request = new CaptchaPhoneCodeRequest();
+        CaptchaPhoneRequest request = new CaptchaPhoneRequest();
         request.setPhone("17521226605");
         request.setCaptchaImage("");
         Captcha captcha = CaptchaAssembler.toDO(request);
@@ -60,7 +62,7 @@ public class UserControllerTest {
     }
 
     private ResultActions byPhone(Phone phone) throws Exception {
-        CaptchaPhoneCommitRequest request = new CaptchaPhoneCommitRequest();
+        CaptchaPhoneVerifyRequest request = new CaptchaPhoneVerifyRequest();
         request.setPhone(phone.getNumber());
         request.setCode(phone.getCode());
 

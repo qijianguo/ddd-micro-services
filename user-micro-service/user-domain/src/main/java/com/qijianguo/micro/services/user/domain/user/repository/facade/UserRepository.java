@@ -1,7 +1,5 @@
 package com.qijianguo.micro.services.user.domain.user.repository.facade;
 
-import com.qijianguo.micro.services.user.domain.user.entity.User;
-import com.qijianguo.micro.services.user.domain.user.event.UserEvent;
 import com.qijianguo.micro.services.user.domain.user.repository.po.UserEventPo;
 import com.qijianguo.micro.services.user.domain.user.repository.po.UserPo;
 
@@ -11,6 +9,8 @@ import com.qijianguo.micro.services.user.domain.user.repository.po.UserPo;
 public interface UserRepository {
 
     UserPo selectById(Integer id);
+
+    UserPo selectByUnionId(String unionKey);
 
     void insert(UserPo user);
 

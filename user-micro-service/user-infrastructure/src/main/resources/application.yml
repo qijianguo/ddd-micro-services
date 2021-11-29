@@ -46,3 +46,6 @@ swagger:
     enable: false
     username: test
     password: UKDFidU712hNklS08PffnB$Ds
+
+token:
+  secret: 112312313

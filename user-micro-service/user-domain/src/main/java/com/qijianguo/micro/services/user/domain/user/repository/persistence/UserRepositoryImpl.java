@@ -1,7 +1,5 @@
 package com.qijianguo.micro.services.user.domain.user.repository.persistence;
 
-import com.qijianguo.micro.services.user.domain.user.entity.UserFactory;
-import com.qijianguo.micro.services.user.domain.user.event.UserEvent;
 import com.qijianguo.micro.services.user.domain.user.repository.facade.UserRepository;
 import com.qijianguo.micro.services.user.domain.user.repository.mapper.UserDao;
 import com.qijianguo.micro.services.user.domain.user.repository.mapper.UserEventDao;
@@ -27,6 +25,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public UserPo selectById(Integer id) {
         return userDao.findById(id).get();
+    }
+
+    @Override
+    public UserPo selectByUnionId(String unionKey) {
+        return userDao.selectByUnionKey(unionKey);
     }
 
     @Override

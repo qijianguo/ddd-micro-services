@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
  */
 @ApiModel("提交手机号验证码")
 @Data
-public class CaptchaPhoneCommitRequest {
+public class CaptchaPhoneVerifyRequest {
 
     @ApiModelProperty(value = "手机号", dataType = "String", required = true, example = "12345678901")
     @Length(min = 11, max = 11, message = "手机号不正确!")

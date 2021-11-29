@@ -15,6 +15,8 @@ public class Captcha {
 
     private Image image;
 
+    private Token token;
+
     public String getPhoneNumber() {
         if (phone != null) {
             return phone.getNumber();
@@ -55,6 +57,7 @@ public class Captcha {
         PHONE,
         IMAGE,
         MAIL,
+        TOKEN,
         ;
     }
 

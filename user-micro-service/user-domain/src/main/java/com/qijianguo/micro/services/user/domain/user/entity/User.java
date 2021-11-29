@@ -29,11 +29,15 @@ public class User {
 
     private String phone;
 
-    private List<Auth> auths;
+    private Auth.Type authType;
+
+    private Set<Auth> auths = new HashSet<>();
 
     private Date createTime;
 
     private Date modifyTime;
+
+    private String token;
 
     public long generateUserId() {
         return 0L;
@@ -66,9 +70,6 @@ public class User {
      * @return
      */
     public boolean bindUserAuth(Auth auth) {
-        if (auths == null) {
-            auths = new ArrayList<>(1);
-        }
         return auths.add(auth);
     }
 
@@ -90,4 +91,5 @@ public class User {
         System.out.println(user.bindUserAuth(auth));;
         System.out.println(user.auths.size());
     }
+
 }

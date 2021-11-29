@@ -1,8 +1,8 @@
 package com.qijianguo.micro.services.user.domain.captcha.service;
 
 import com.qijianguo.micro.services.user.domain.captcha.entity.Captcha;
+import com.qijianguo.micro.services.user.domain.captcha.repository.facade.CaptchaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class CaptchaDomainService <T> {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private CaptchaRepository captchaRepository;
 
     /**
      * 创建验证码
@@ -35,14 +35,12 @@ public abstract class CaptchaDomainService <T> {
      * @param key 关键字
      * @return 数据对象
      */
-    T getFromCache(String key) {
-        return (T) redisTemplate.opsForValue().get(key);
+    T get(String key) {
+        return (T) captchaRepository.getByKey(key);
     }
 
-    T getFromCacheAndClearCache(String key) {
-        T fromCache = getFromCache(key);
-        clearCache(key);
-        return fromCache;
+    T getAndDel(String key) {
+        return (T) captchaRepository.getByKeyAndDel(key);
     }
 
     boolean compareTo(String input, String saved) {
@@ -57,8 +55,8 @@ public abstract class CaptchaDomainService <T> {
      * @param key 关键字
      * @param t 数据对象
      */
-    void saveToCache(String key, T t) {
-        redisTemplate.opsForValue().set(key, t, 60, TimeUnit.SECONDS);
+    void save(String key, T t) {
+        captchaRepository.save(key, t);
     }
 
     /**
@@ -66,17 +64,29 @@ public abstract class CaptchaDomainService <T> {
      * @param key 关键字
      * @param t 数据对象
      */
-    void saveToCache(String key, T t, int seconds) {
-        redisTemplate.opsForValue().set(key, t, seconds, TimeUnit.SECONDS);
+    void save(String key, T t, int timeout) {
+        captchaRepository.save(key, t, timeout, TimeUnit.SECONDS);
     }
 
+    /**
+     * 保存到缓存
+     * @param key 关键字
+     * @param t 数据对象
+     */
+    void save(String key, T t, int timeout, TimeUnit timeUnit) {
+        captchaRepository.save(key, t, timeout, timeUnit);
+    }
+
+    void refresh(String key, int timeout, TimeUnit timeUnit) {
+        captchaRepository.refresh(key, timeout, timeUnit);
+    }
 
     /**
      * 清除缓存
      * @param key
      */
-    void clearCache(String key) {
-        redisTemplate.delete(key);
+    void delete(String key) {
+        captchaRepository.deleteByKey(key);
     }
 
 

@@ -2,8 +2,8 @@ package com.qijianguo.micro.services.user.interfaces.assembler;
 
 import com.qijianguo.micro.services.user.domain.captcha.entity.*;
 import com.qijianguo.micro.services.user.interfaces.dto.CaptchaImageRequest;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneCodeRequest;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneCommitRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneVerifyRequest;
 import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneResponse;
 import lombok.Data;
 import org.springframework.util.StringUtils;
@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 public class CaptchaAssembler {
 
-    public static Captcha toDO(CaptchaPhoneCodeRequest request) {
+    public static Captcha toDO(CaptchaPhoneRequest request) {
         Captcha captcha = new Captcha();
         captcha.setType(Captcha.Type.PHONE);
         captcha.setPhone(CaptchaAssembler.toPhone(request));
@@ -34,14 +34,14 @@ public class CaptchaAssembler {
         return captcha;
     }
 
-    public static Captcha toDO(CaptchaPhoneCommitRequest request) {
+    public static Captcha toDO(CaptchaPhoneVerifyRequest request) {
         Captcha captcha = new Captcha();
         captcha.setType(Captcha.Type.PHONE);
         captcha.setPhone(CaptchaAssembler.toPhone(request));
         return captcha;
     }
 
-    public static Phone toPhone(CaptchaPhoneCommitRequest request) {
+    public static Phone toPhone(CaptchaPhoneVerifyRequest request) {
         Phone phone = new Phone();
         phone.setNumber(request.getPhone());
         phone.setCode(request.getCode());
@@ -52,7 +52,7 @@ public class CaptchaAssembler {
         return new CaptchaPhoneResponse(phone.getLevel() == Phone.Level.LOWER, PhonePolicy.Config.LIMITED.getNum());
     }
 
-    public static Phone toPhone(CaptchaPhoneCodeRequest request) {
+    public static Phone toPhone(CaptchaPhoneRequest request) {
         Phone phone = new Phone();
         phone.setNumber(request.getPhone());
         phone.setCreateTime(new Date());

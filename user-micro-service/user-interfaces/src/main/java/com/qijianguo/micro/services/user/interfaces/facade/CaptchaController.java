@@ -6,7 +6,7 @@ import com.qijianguo.micro.services.user.domain.captcha.entity.Image;
 import com.qijianguo.micro.services.user.domain.captcha.entity.Phone;
 import com.qijianguo.micro.services.user.interfaces.assembler.CaptchaAssembler;
 import com.qijianguo.micro.services.user.interfaces.dto.CaptchaImageRequest;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneCodeRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneRequest;
 import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +35,14 @@ public class CaptchaController {
         String key = "11111111";
         CaptchaImageRequest request = new CaptchaImageRequest();
         // 将Key放到Header中，返回给用户
-        response.setHeader("captcha_img_key", key);
         Image image = imageCaptchaAppService.create(CaptchaAssembler.toDO(request)).getImage();
+        response.setHeader("captcha_img_key", image.getKey());
         return image.getJpeg();
     }
 
     @ApiOperation(value = "获取手机验证码", response = CaptchaPhoneResponse.class)
     @PostMapping("/phone")
-    public BaseResponse<CaptchaPhoneResponse> phone(@RequestBody @Valid CaptchaPhoneCodeRequest request) {
+    public BaseResponse<CaptchaPhoneResponse> phone(@RequestBody @Valid CaptchaPhoneRequest request) {
         Phone phone = phoneCaptchaAppService.create(CaptchaAssembler.toDO(request)).getPhone();
         return BaseResponse.success(CaptchaAssembler.toDTO(phone));
     }

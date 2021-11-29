@@ -26,7 +26,7 @@ public class PhoneCaptchaDomainService extends CaptchaDomainService<Phone> {
 
         phone.updateCode();
 
-        saveToCache(phone.generateKey(), phone, 86400);
+        save(phone.generateKey(), phone, 86400);
 
         captcha.setPhone(phone);
 
@@ -37,15 +37,15 @@ public class PhoneCaptchaDomainService extends CaptchaDomainService<Phone> {
     public void commit(Captcha captcha) {
         Phone phone = captcha.getPhone();
 
-        Phone fromCache = getFromCache(phone.generateKey());
+        Phone fromCache = get(phone.generateKey());
         if (fromCache == null || !fromCache.compareTo(phone)) {
             throw new BusinessException(UserEmBusinessError.CODE_EXPIRED);
         }
-        clearCache(phone.generateKey());
+        delete(phone.generateKey());
     }
 
     private Phone validateAndMerge(Captcha captcha) {
-        Phone cache = getFromCache(captcha.getPhone().generateKey());
+        Phone cache = get(captcha.getPhone().generateKey());
         if (cache != null) {
             cache.verifyPhoneCode();
             safeVerify(captcha, cache);
@@ -60,7 +60,7 @@ public class PhoneCaptchaDomainService extends CaptchaDomainService<Phone> {
             Image image = captcha.getImage();
             if (image == null || StringUtils.isEmpty(image.getWords())
                     || !compareTo(image.getWords(),
-                    (String)imageCaptchaDomainService.getFromCacheAndClearCache(RedisKey.CAPTCHA_IMG(image.getKey())))
+                    (String)imageCaptchaDomainService.getAndDel(RedisKey.CAPTCHA_IMG(image.getKey())))
             ) {
                 throw new BusinessException(UserEmBusinessError.CAPTCHA_IMG_ERROR);
             }

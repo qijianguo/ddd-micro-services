@@ -3,9 +3,9 @@ package com.qijianguo.micro.services.user.domain.user.repository.po;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
-@Entity
+@Entity(name = "userPo")
 @Table(name = "t_user")
 @Data
 public class UserPo {
@@ -26,9 +26,12 @@ public class UserPo {
     @Column
     private Integer role;
     @Column
-    private String phone;
-    @Column
     private Date createTime;
     @Column
     private Date modifyTime;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Set<AuthPo> authPos;
+
 }

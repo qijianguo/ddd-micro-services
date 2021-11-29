@@ -6,7 +6,7 @@ import com.qijianguo.micro.services.user.domain.captcha.entity.Phone;
 import com.qijianguo.micro.services.user.domain.captcha.entity.PhonePolicy;
 import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
 import com.qijianguo.micro.services.user.interfaces.assembler.CaptchaAssembler;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneCodeRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneRequest;
 import net.minidev.json.JSONValue;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -42,13 +42,13 @@ public class CaptchaControllerTest {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    private static CaptchaPhoneCodeRequest request = null;
+    private static CaptchaPhoneRequest request = null;
 
     private static Phone phone = null;
 
     @BeforeClass
     public static void beforeClass() {
-        request = new CaptchaPhoneCodeRequest();
+        request = new CaptchaPhoneRequest();
         request.setPhone("12345678996");
         request.setCaptchaImage("");
 
@@ -129,7 +129,7 @@ public class CaptchaControllerTest {
     }
 
 
-    private ResultActions phoneCode(CaptchaPhoneCodeRequest request) throws Exception {
+    private ResultActions phoneCode(CaptchaPhoneRequest request) throws Exception {
         String paramJson = JSONValue.toJSONString(request);
         logger.info("params: {}", paramJson);
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders

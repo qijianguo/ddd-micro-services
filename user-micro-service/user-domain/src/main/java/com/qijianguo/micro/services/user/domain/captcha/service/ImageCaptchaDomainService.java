@@ -25,13 +25,13 @@ public class ImageCaptchaDomainService extends CaptchaDomainService<String> {
         captcha.setImage(image);
 
         // caching...
-        saveToCache(RedisKey.CAPTCHA_IMG(image.getKey()), image.getWords());
+        save(RedisKey.CAPTCHA_IMG(image.getKey()), image.getWords());
     }
 
     @Override
     public void commit(Captcha captcha) {
         Image image = captcha.getImage();
-        String o = getFromCache(RedisKey.CAPTCHA_IMG(image.getKey()));
+        String o = get(RedisKey.CAPTCHA_IMG(image.getKey()));
         if (StringUtils.isEmpty(o) || !Objects.equals(o.toLowerCase(), image.getWords().toLowerCase())) {
             throw new BusinessException(UserEmBusinessError.CAPTCHA_IMG_ERROR);
         }

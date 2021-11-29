@@ -17,6 +17,8 @@ public class CaptchaAppService {
     private CaptchaDomainService imageCaptchaDomainService;
     @Autowired
     private CaptchaDomainService phoneCaptchaDomainService;
+    @Autowired
+    private CaptchaDomainService tokenCaptchaDomainService;
 
     public Captcha create(Captcha captcha) {
         switch (captcha.getType()) {
@@ -26,6 +28,8 @@ public class CaptchaAppService {
             case IMAGE:
                 imageCaptchaDomainService.create(captcha);
                 break;
+            case TOKEN:
+                imageCaptchaDomainService.create(captcha);
             default:
                 throw new BusinessException(UserEmBusinessError.CAPTCHA_TYPE_NOT_SUPPORT);
         }
@@ -41,6 +45,8 @@ public class CaptchaAppService {
             case IMAGE:
                 imageCaptchaDomainService.commit(captcha);
                 break;
+            case TOKEN:
+
             default:
                 throw new BusinessException(UserEmBusinessError.CAPTCHA_TYPE_NOT_SUPPORT);
         }

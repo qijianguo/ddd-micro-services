@@ -6,6 +6,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @author qijianguo
+ */
 @Entity
 @Table(name = "t_user_event")
 @Data
@@ -15,6 +18,8 @@ public class UserEventPo {
     @GenericGenerator(name = "idGenerator", strategy = "uuid")
     @GeneratedValue(generator = "idGenerator")
     private String id;
+    @Column(name = "user_id", length = 11)
+    private Integer userId;
     @Column(name = "event_type", length = 20)
     private String eventType;
     @Column(name = "aggregate_id", length = 20)
@@ -25,6 +30,5 @@ public class UserEventPo {
     private String eventPayload;
     @Column(name = "create_time")
     private Date createTime;
-
 
 }
