@@ -6,7 +6,7 @@
 
     <groupId>com.qijianguo.micro.services</groupId>
     <artifactId>base-micro-service</artifactId>
-    <version>1.0.20-RELEASE</version>
+    <version>1.0.21-RELEASE</version>
 
     <packaging>pom</packaging>
 
@@ -75,12 +75,12 @@
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-model</artifactId>
-                <version>1.0.20-RELEASE</version>
+                <version>1.0.21-RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-libs</artifactId>
-                <version>1.0.20-RELEASE</version>
+                <version>1.0.21-RELEASE</version>
             </dependency>
 
             <dependency>
