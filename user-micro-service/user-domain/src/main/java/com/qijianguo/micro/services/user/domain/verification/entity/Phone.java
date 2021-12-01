@@ -1,6 +1,5 @@
-package com.qijianguo.micro.services.user.domain.captcha.entity;
+package com.qijianguo.micro.services.user.domain.verification.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.qijianguo.micro.services.base.libs.util.RandomUtils;
 import com.qijianguo.micro.services.user.infrastructure.util.RedisKey;

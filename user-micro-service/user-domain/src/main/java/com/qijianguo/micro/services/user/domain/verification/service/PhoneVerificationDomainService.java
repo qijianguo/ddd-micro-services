@@ -1,8 +1,8 @@
-package com.qijianguo.micro.services.user.domain.captcha.service;
+package com.qijianguo.micro.services.user.domain.verification.service;
 
 import com.qijianguo.micro.services.base.exception.BusinessException;
 import com.qijianguo.micro.services.base.libs.service.SmsService;
-import com.qijianguo.micro.services.user.domain.captcha.entity.*;
+import com.qijianguo.micro.services.user.domain.verification.entity.*;
 import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
 import com.qijianguo.micro.services.user.infrastructure.util.RedisKey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,30 +12,30 @@ import org.springframework.util.StringUtils;
 /**
  * @author qijianguo
  */
-@Service("phoneCaptchaDomainService")
-public class PhoneCaptchaDomainService extends CaptchaDomainService<Phone> {
+@Service("phoneVerificationDomainService")
+public class PhoneVerificationDomainService extends VerificationDomainService<Phone> {
 
     @Autowired
     private SmsService smsService;
     @Autowired
-    private CaptchaDomainService imageCaptchaDomainService;
+    private VerificationDomainService imageVerificationDomainService;
 
     @Override
-    public void create(Captcha captcha) {
-        Phone phone = validateAndMerge(captcha);
+    public void create(Verification verification) {
+        Phone phone = validateAndMerge(verification);
 
         phone.updateCode();
 
         save(phone.generateKey(), phone, 86400);
 
-        captcha.setPhone(phone);
+        verification.setPhone(phone);
 
         smsService.sendVerifyCode(phone.getNumber(), String.valueOf(phone.getCode()));
     }
 
     @Override
-    public void commit(Captcha captcha) {
-        Phone phone = captcha.getPhone();
+    public void verify(Verification verification) {
+        Phone phone = verification.getPhone();
 
         Phone fromCache = get(phone.generateKey());
         if (fromCache == null || !fromCache.compareTo(phone)) {
@@ -44,23 +44,23 @@ public class PhoneCaptchaDomainService extends CaptchaDomainService<Phone> {
         delete(phone.generateKey());
     }
 
-    private Phone validateAndMerge(Captcha captcha) {
-        Phone cache = get(captcha.getPhone().generateKey());
+    private Phone validateAndMerge(Verification verification) {
+        Phone cache = get(verification.getPhone().generateKey());
         if (cache != null) {
             cache.verifyPhoneCode();
-            safeVerify(captcha, cache);
+            safeVerify(verification, cache);
             return cache;
         }
-        return captcha.getPhone();
+        return verification.getPhone();
     }
 
-    private void safeVerify(Captcha captcha, Phone cache) {
+    private void safeVerify(Verification verification, Phone cache) {
         // 验证
         if (cache.getLevel() == Phone.Level.LOWER) {
-            Image image = captcha.getImage();
+            Image image = verification.getImage();
             if (image == null || StringUtils.isEmpty(image.getWords())
                     || !compareTo(image.getWords(),
-                    (String)imageCaptchaDomainService.getAndDel(RedisKey.CAPTCHA_IMG(image.getKey())))
+                    (String) imageVerificationDomainService.getAndDel(RedisKey.CAPTCHA_IMG(image.getKey())))
             ) {
                 throw new BusinessException(UserEmBusinessError.CAPTCHA_IMG_ERROR);
             }

@@ -1,10 +1,10 @@
 package com.qijianguo.micro.services.user.interfaces.assembler;
 
-import com.qijianguo.micro.services.user.domain.captcha.entity.*;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaImageRequest;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneRequest;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneVerifyRequest;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneResponse;
+import com.qijianguo.micro.services.user.domain.verification.entity.*;
+import com.qijianguo.micro.services.user.interfaces.dto.ImageRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.PhoneRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.PhoneVerifyRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.PhoneResponse;
 import lombok.Data;
 import org.springframework.util.StringUtils;
 
@@ -16,43 +16,43 @@ import java.util.Date;
 @Data
 public class CaptchaAssembler {
 
-    public static Captcha toDO(CaptchaPhoneRequest request) {
-        Captcha captcha = new Captcha();
-        captcha.setType(Captcha.Type.PHONE);
-        captcha.setPhone(CaptchaAssembler.toPhone(request));
+    public static Verification toDO(PhoneRequest request) {
+        Verification verification = new Verification();
+        verification.setType(Verification.Type.PHONE);
+        verification.setPhone(CaptchaAssembler.toPhone(request));
         if (!StringUtils.isEmpty(request.getCaptchaImage())) {
             Image image = toImage(request.getKey(), request.getCaptchaImage());
-            captcha.setImage(image);
+            verification.setImage(image);
         }
-        return captcha;
+        return verification;
     }
 
-    public static Captcha toDO(CaptchaImageRequest request) {
-        Captcha captcha = new Captcha();
-        captcha.setType(Captcha.Type.IMAGE);
-        captcha.setImage(new Image(request.getKey()));
-        return captcha;
+    public static Verification toDO(ImageRequest request) {
+        Verification verification = new Verification();
+        verification.setType(Verification.Type.IMAGE);
+        verification.setImage(new Image(request.getKey()));
+        return verification;
     }
 
-    public static Captcha toDO(CaptchaPhoneVerifyRequest request) {
-        Captcha captcha = new Captcha();
-        captcha.setType(Captcha.Type.PHONE);
-        captcha.setPhone(CaptchaAssembler.toPhone(request));
-        return captcha;
+    public static Verification toDO(PhoneVerifyRequest request) {
+        Verification verification = new Verification();
+        verification.setType(Verification.Type.PHONE);
+        verification.setPhone(CaptchaAssembler.toPhone(request));
+        return verification;
     }
 
-    public static Phone toPhone(CaptchaPhoneVerifyRequest request) {
+    public static Phone toPhone(PhoneVerifyRequest request) {
         Phone phone = new Phone();
         phone.setNumber(request.getPhone());
         phone.setCode(request.getCode());
         return phone;
     }
 
-    public static CaptchaPhoneResponse toDTO(Phone phone) {
-        return new CaptchaPhoneResponse(phone.getLevel() == Phone.Level.LOWER, PhonePolicy.Config.LIMITED.getNum());
+    public static PhoneResponse toDTO(Phone phone) {
+        return new PhoneResponse(phone.getLevel() == Phone.Level.LOWER, PhonePolicy.Config.LIMITED.getNum());
     }
 
-    public static Phone toPhone(CaptchaPhoneRequest request) {
+    public static Phone toPhone(PhoneRequest request) {
         Phone phone = new Phone();
         phone.setNumber(request.getPhone());
         phone.setCreateTime(new Date());

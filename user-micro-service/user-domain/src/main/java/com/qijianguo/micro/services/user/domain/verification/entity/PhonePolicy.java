@@ -1,7 +1,7 @@
-package com.qijianguo.micro.services.user.domain.captcha.entity;
+package com.qijianguo.micro.services.user.domain.verification.entity;
 
 import com.qijianguo.micro.services.base.exception.BusinessException;
-import com.qijianguo.micro.services.base.libs.util.TimeUtils;
+import com.qijianguo.micro.services.user.infrastructure.util.TimeUtils;
 import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
 import lombok.Getter;
 
@@ -24,7 +24,7 @@ public class PhonePolicy {
         }
         // 限制请求次数
         try {
-            if (phone.getCreateTime().before(TimeUtils.convertDate2Date(now, TimeUtils.YYYY_HH_MM_00_00_00))) {
+            if (phone.getCreateTime().before(TimeUtils.dataFormat(now, TimeUtils.YYYY_HH_MM_00_00_00))) {
                 reset(phone);
             } else if (phone.getCount() >= Config.DAY_LIMITED.num){
                 throw new BusinessException(UserEmBusinessError.CODE_REQ_MAX_COUNTS);

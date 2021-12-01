@@ -70,7 +70,7 @@ public class PayUtil {
      */
     public static String getTransfersNo() {
         StringBuilder tsf = new StringBuilder("TsfNO");
-        tsf.append(TimeUtils.convertLocalDateTime2String(LocalDateTime.now(), TimeUtils.YYYY_HH_MM_HH_MM_SS)).append(RandomUtils.randomNumRange(100, 1000));
+        tsf.append(TimeUtils.localDateTime2String(LocalDateTime.now(), TimeUtils.YYYY_HH_MM_HH_MM_SS)).append(RandomUtils.randomNumRange(100, 1000));
         return tsf.toString();
     }
 
@@ -82,7 +82,7 @@ public class PayUtil {
     public static String getTradeNo(int limitId) {
         // 自增8位数 00000001
         StringBuilder td = new StringBuilder("TdNO");
-        td.append(TimeUtils.convertLocalDateTime2String(LocalDateTime.now(), TimeUtils.YYYY_HH_MM_HH_MM_SS)).append(RandomUtils.randomNumRange(100, 1000)).append("_").append(limitId);
+        td.append(TimeUtils.localDateTime2String(LocalDateTime.now(), TimeUtils.YYYY_HH_MM_HH_MM_SS)).append(RandomUtils.randomNumRange(100, 1000)).append("_").append(limitId);
         return td.toString();
     }
 
@@ -94,7 +94,7 @@ public class PayUtil {
     public static String getRefundNo() {
         // 自增8位数 00000001
         StringBuilder rf = new StringBuilder("RfNO");
-        rf.append(TimeUtils.convertLocalDateTime2String(LocalDateTime.now(), TimeUtils.YYYY_HH_MM_HH_MM_SS)).append(RandomUtils.randomNumRange(100, 1000));
+        rf.append(TimeUtils.localDateTime2String(LocalDateTime.now(), TimeUtils.YYYY_HH_MM_HH_MM_SS)).append(RandomUtils.randomNumRange(100, 1000));
         return rf.toString();
     }
 

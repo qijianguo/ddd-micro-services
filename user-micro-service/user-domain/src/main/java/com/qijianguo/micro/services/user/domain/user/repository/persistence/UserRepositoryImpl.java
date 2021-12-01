@@ -23,17 +23,17 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     @Override
-    public UserPo selectById(Integer id) {
+    public UserPo findById(Integer id) {
         return userDao.findById(id).get();
     }
 
     @Override
-    public UserPo selectByUnionId(String unionKey) {
+    public UserPo findByUnionKey(String unionKey) {
         return userDao.selectByUnionKey(unionKey);
     }
 
     @Override
-    public void insert(UserPo user) {
+    public void save(UserPo user) {
         userDao.save(user);
     }
 

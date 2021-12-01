@@ -1,16 +1,18 @@
 package com.qijianguo.micro.services.user.interfaces.facade;
 
 import com.qijianguo.micro.services.base.exception.EmBusinessError;
-import com.qijianguo.micro.services.base.libs.util.TimeUtils;
-import com.qijianguo.micro.services.user.domain.captcha.entity.Phone;
-import com.qijianguo.micro.services.user.domain.captcha.entity.PhonePolicy;
+import com.qijianguo.micro.services.user.domain.verification.entity.Phone;
+import com.qijianguo.micro.services.user.domain.verification.entity.PhonePolicy;
 import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
+import com.qijianguo.micro.services.user.infrastructure.util.TimeUtils;
 import com.qijianguo.micro.services.user.interfaces.assembler.CaptchaAssembler;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.PhoneRequest;
 import net.minidev.json.JSONValue;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,43 +28,56 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.Assert;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
-import static com.qijianguo.micro.services.user.domain.captcha.entity.PhonePolicy.Config.EXPIRED;
+import static com.qijianguo.micro.services.user.domain.verification.entity.PhonePolicy.Config.EXPIRED;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CaptchaControllerTest {
+@FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
+public class VerificationControllerTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(CaptchaControllerTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(VerificationControllerTest.class);
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private RedisTemplate redisTemplate;
 
-    private static CaptchaPhoneRequest request = null;
+    private static PhoneRequest request = null;
 
     private static Phone phone = null;
 
     @BeforeClass
     public static void beforeClass() {
-        request = new CaptchaPhoneRequest();
+        request = new PhoneRequest();
         request.setPhone("12345678996");
         request.setCaptchaImage("");
-
         phone = CaptchaAssembler.toPhone(request);
     }
 
     @Test
-    public void phoneCode() throws Exception {
+    public void test01_normal() throws Exception {
         // 正常请求
         normal();
+    }
+
+    @Test
+    public void test02_frequency() throws Exception {
         // 验证频繁请求
         frequency();
+    }
+
+    @Test
+    public void test03_countLimited() throws Exception {
         // 验证每日次数耗尽
         countLimited();
+    }
+
+    @Test
+    public void test04_resetCount() throws Exception {
         // 重置今日次数
         resetCount();
     }
@@ -89,23 +104,23 @@ public class CaptchaControllerTest {
     /**
      * 设置最近一次的发送时间
      */
-    private void setLatestSendTime(boolean today) {
+    private void resetSendTime(boolean today) {
         if (today) {
             phone.setCount(PhonePolicy.Config.DAY_LIMITED.getNum());
-            phone.setCreateTime(TimeUtils.convertLocalDateTime2Date(TimeUtils.convertDate2LocalDateTime(new Date()).minusMinutes(30)));
-            phone.setModifyTime(TimeUtils.convertLocalDateTime2Date(TimeUtils.convertDate2LocalDateTime(new Date()).minusMinutes(2)));
+            phone.setCreateTime(TimeUtils.before(new Date(), 30, TimeUnit.MINUTES));
+            phone.setModifyTime(TimeUtils.before(new Date(), 2, TimeUnit.MINUTES));
             redisTemplate.opsForValue().set(phone.generateKey(), phone, EXPIRED.getNum(), EXPIRED.getTimeUnit());
         } else {
             phone.setCount(PhonePolicy.Config.DAY_LIMITED.getNum() + 1);
-            phone.setCreateTime(TimeUtils.convertLocalDateTime2Date(TimeUtils.convertDate2LocalDateTime(new Date()).minusDays(1)));
-            phone.setModifyTime(TimeUtils.convertLocalDateTime2Date(TimeUtils.convertDate2LocalDateTime(new Date()).minusDays(1)));
+            phone.setCreateTime(TimeUtils.before(new Date(), 1, TimeUnit.DAYS));
+            phone.setModifyTime(TimeUtils.before(new Date(), 1, TimeUnit.DAYS));
             redisTemplate.opsForValue().set(phone.generateKey(), phone, EXPIRED.getNum(), EXPIRED.getTimeUnit());
         }
 
     }
 
     public void countLimited() throws Exception {
-        setLatestSendTime(true);
+        resetSendTime(true);
         // 验证每日次数耗尽
         ResultActions result3 = phoneCode(request);
         result3.andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -115,7 +130,7 @@ public class CaptchaControllerTest {
 
     private void resetCount() throws Exception {
         // 重置今日次数
-        setLatestSendTime(false);
+        resetSendTime(false);
 
         ResultActions result4 = phoneCode(request);
         result4.andExpect(MockMvcResultMatchers.status().isOk())
@@ -129,7 +144,7 @@ public class CaptchaControllerTest {
     }
 
 
-    private ResultActions phoneCode(CaptchaPhoneRequest request) throws Exception {
+    private ResultActions phoneCode(PhoneRequest request) throws Exception {
         String paramJson = JSONValue.toJSONString(request);
         logger.info("params: {}", paramJson);
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders

@@ -1,8 +1,8 @@
 package com.qijianguo.micro.services.user.application.service;
 
 import com.qijianguo.micro.services.base.exception.BusinessException;
-import com.qijianguo.micro.services.user.domain.captcha.entity.Captcha;
-import com.qijianguo.micro.services.user.domain.captcha.service.CaptchaDomainService;
+import com.qijianguo.micro.services.user.domain.verification.entity.Verification;
+import com.qijianguo.micro.services.user.domain.verification.service.VerificationDomainService;
 import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,39 +14,39 @@ import org.springframework.stereotype.Service;
 public class CaptchaAppService {
 
     @Autowired
-    private CaptchaDomainService imageCaptchaDomainService;
+    private VerificationDomainService imageVerificationDomainService;
     @Autowired
-    private CaptchaDomainService phoneCaptchaDomainService;
+    private VerificationDomainService phoneVerificationDomainService;
     @Autowired
-    private CaptchaDomainService tokenCaptchaDomainService;
+    private VerificationDomainService tokenVerificationDomainService;
 
-    public Captcha create(Captcha captcha) {
-        switch (captcha.getType()) {
+    public Verification create(Verification verification) {
+        switch (verification.getType()) {
             case PHONE:
-                phoneCaptchaDomainService.create(captcha);
+                phoneVerificationDomainService.create(verification);
                 break;
             case IMAGE:
-                imageCaptchaDomainService.create(captcha);
+                imageVerificationDomainService.create(verification);
                 break;
             case TOKEN:
-                imageCaptchaDomainService.create(captcha);
+                imageVerificationDomainService.create(verification);
             default:
                 throw new BusinessException(UserEmBusinessError.CAPTCHA_TYPE_NOT_SUPPORT);
         }
-        return captcha;
+        return verification;
 
     }
 
-    public void validate(Captcha captcha) {
-        switch (captcha.getType()) {
+    public void validate(Verification verification) {
+        switch (verification.getType()) {
             case PHONE:
-                phoneCaptchaDomainService.commit(captcha);
+                phoneVerificationDomainService.verify(verification);
                 break;
             case IMAGE:
-                imageCaptchaDomainService.commit(captcha);
+                imageVerificationDomainService.verify(verification);
                 break;
             case TOKEN:
-
+                tokenVerificationDomainService.verify(verification);
             default:
                 throw new BusinessException(UserEmBusinessError.CAPTCHA_TYPE_NOT_SUPPORT);
         }

@@ -4,25 +4,26 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 /**
  * @author qijianguo
  */
-@ApiModel("提交手机号验证码")
+@ApiModel("获取手机号验证码")
 @Data
-public class CaptchaPhoneVerifyRequest {
+@Valid
+public class PhoneRequest {
 
     @ApiModelProperty(value = "手机号", dataType = "String", required = true, example = "12345678901")
     @Length(min = 11, max = 11, message = "手机号不正确!")
     @NotBlank(message = "手机号不能为空!")
     private String phone;
 
-    @ApiModelProperty(value = "验证码", dataType = "Integer", required = true, example = "1234")
-    @Range(min = 1000, max = 9999, message = "请输入有效的验证码！")
-    private Integer code;
+    @ApiModelProperty(value = "图片验证码的KEY", hidden = true)
+    private String key;
+    @ApiModelProperty(value = "图片验证码（选填）", dataType = "String", example = "a1b2")
+    private String captchaImage;
 
 }

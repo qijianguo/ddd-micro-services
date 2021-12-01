@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CaptchaPhoneResponse {
+public class PhoneResponse {
     @ApiModelProperty(value = "图片验证码校验", dataType = "boolean")
     private boolean imageVerify;
 

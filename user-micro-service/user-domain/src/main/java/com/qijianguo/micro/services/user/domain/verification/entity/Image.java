@@ -1,4 +1,4 @@
-package com.qijianguo.micro.services.user.domain.captcha.entity;
+package com.qijianguo.micro.services.user.domain.verification.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

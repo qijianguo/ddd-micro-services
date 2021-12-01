@@ -1,4 +1,4 @@
-package com.qijianguo.micro.services.user.domain.captcha.entity;
+package com.qijianguo.micro.services.user.domain.verification.entity;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * @author qijianguo
  */
 @Data
-public class Captcha {
+public class Verification<T> {
 
     private Type type;
 
@@ -52,11 +52,16 @@ public class Captcha {
         throw new IllegalArgumentException("Captcha Image is Null: ");
     }
 
+    public String getTokenValue() {
+        if (token != null) {
+            return token.getValue();
+        }
+        throw new IllegalArgumentException("Captcha Token is Null: ");
+    }
 
     public enum Type {
         PHONE,
         IMAGE,
-        MAIL,
         TOKEN,
         ;
     }

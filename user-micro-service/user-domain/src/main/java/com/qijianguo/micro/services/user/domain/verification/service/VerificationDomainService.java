@@ -1,7 +1,7 @@
-package com.qijianguo.micro.services.user.domain.captcha.service;
+package com.qijianguo.micro.services.user.domain.verification.service;
 
-import com.qijianguo.micro.services.user.domain.captcha.entity.Captcha;
-import com.qijianguo.micro.services.user.domain.captcha.repository.facade.CaptchaRepository;
+import com.qijianguo.micro.services.user.domain.verification.entity.Verification;
+import com.qijianguo.micro.services.user.domain.verification.repository.facade.CaptchaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author qijianguo
  */
-public abstract class CaptchaDomainService <T> {
+public abstract class VerificationDomainService<T> {
 
     @Autowired
     private CaptchaRepository captchaRepository;
@@ -23,12 +23,12 @@ public abstract class CaptchaDomainService <T> {
     /**
      * 创建验证码
      */
-    public abstract void create(Captcha captcha);
+    public abstract void create(Verification verification);
 
     /**
      * 验证码校验
      */
-    public abstract void commit(Captcha captcha);
+    public abstract void verify(Verification verification);
 
     /**
      * 查询缓存
@@ -36,11 +36,11 @@ public abstract class CaptchaDomainService <T> {
      * @return 数据对象
      */
     T get(String key) {
-        return (T) captchaRepository.getByKey(key);
+        return (T) captchaRepository.findByKey(key);
     }
 
     T getAndDel(String key) {
-        return (T) captchaRepository.getByKeyAndDel(key);
+        return (T) captchaRepository.findByKeyAndDel(key);
     }
 
     boolean compareTo(String input, String saved) {

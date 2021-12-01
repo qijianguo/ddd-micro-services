@@ -6,7 +6,7 @@
 
     <groupId>com.qijianguo.micro.services</groupId>
     <artifactId>base-micro-service</artifactId>
-    <version>1.0.21-RELEASE</version>
+    <version>1.0.22-RELEASE</version>
 
     <packaging>pom</packaging>
 
@@ -67,6 +67,7 @@
         <xxljob.version>2.3.0</xxljob.version>
         <io.grpc.version>1.12.0</io.grpc.version>
         <dubbo.version>2.7.8</dubbo.version>
+        <jackson-databind.version>2.11.2</jackson-databind.version>
 
     </properties>
 
@@ -75,12 +76,12 @@
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-model</artifactId>
-                <version>1.0.21-RELEASE</version>
+                <version>1.0.22-RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-libs</artifactId>
-                <version>1.0.21-RELEASE</version>
+                <version>1.0.22-RELEASE</version>
             </dependency>
 
             <dependency>
@@ -526,6 +527,12 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-databind.version}</version>
             </dependency>
 
         </dependencies>

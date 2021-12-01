@@ -4,7 +4,7 @@ import com.qijianguo.micro.services.base.model.dto.BaseResponse;
 import com.qijianguo.micro.services.user.application.service.UserAppService;
 import com.qijianguo.micro.services.user.domain.user.entity.User;
 import com.qijianguo.micro.services.user.interfaces.assembler.CaptchaAssembler;
-import com.qijianguo.micro.services.user.interfaces.dto.CaptchaPhoneVerifyRequest;
+import com.qijianguo.micro.services.user.interfaces.dto.PhoneVerifyRequest;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +27,8 @@ public class UserController {
 
     @ApiOperation(value = "根据手机号登录", response = BaseResponse.class)
     @PostMapping("/phone")
-    public BaseResponse loginByPhone(@RequestBody @Valid CaptchaPhoneVerifyRequest captchaPhoneVerifyRequest, HttpServletResponse response) {
-        User save = userAppService.save(CaptchaAssembler.toDO(captchaPhoneVerifyRequest));
+    public BaseResponse loginByPhone(@RequestBody @Valid PhoneVerifyRequest phoneVerifyRequest, HttpServletResponse response) {
+        User save = userAppService.save(CaptchaAssembler.toDO(phoneVerifyRequest));
         response.setHeader("authorization", save.getToken());
         return BaseResponse.success(save);
     }

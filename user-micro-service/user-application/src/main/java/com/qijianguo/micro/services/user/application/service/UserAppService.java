@@ -1,9 +1,9 @@
 package com.qijianguo.micro.services.user.application.service;
 
 import com.qijianguo.micro.services.user.application.event.publish.UserEventPublish;
-import com.qijianguo.micro.services.user.domain.captcha.entity.Captcha;
-import com.qijianguo.micro.services.user.domain.captcha.entity.Token;
-import com.qijianguo.micro.services.user.domain.captcha.service.CaptchaDomainService;
+import com.qijianguo.micro.services.user.domain.verification.entity.Verification;
+import com.qijianguo.micro.services.user.domain.verification.entity.VerificationFactory;
+import com.qijianguo.micro.services.user.domain.verification.service.VerificationDomainService;
 import com.qijianguo.micro.services.user.domain.user.entity.User;
 import com.qijianguo.micro.services.user.domain.user.entity.UserFactory;
 import com.qijianguo.micro.services.user.domain.user.service.UserDomainService;
@@ -21,26 +21,22 @@ public class UserAppService {
     @Autowired
     private CaptchaAppService phoneCaptchaAppService;
     @Autowired
-    private CaptchaDomainService tokenCaptchaDomainService;
+    private VerificationDomainService tokenVerificationDomainService;
     @Autowired
     private UserDomainService userDomainService;
     @Autowired
     private UserEventPublish userEventPublish;
 
-    public User save(Captcha captcha) {
-        phoneCaptchaAppService.validate(captcha);
+    public User save(Verification verification) {
+        phoneCaptchaAppService.validate(verification);
 
-        User user = userDomainService.createUserByPhone(UserFactory.toUserDO(captcha.getPhoneNumber()));
+        User user = userDomainService.createUserByPhone(UserFactory.toUserDO(verification.getPhoneNumber()));
 
-        Token token = new Token();
-        token.setId(String.valueOf(user.getId()));
-        token.setData(user);
-        token.setTimeout(7);
-        token.setTimeUnit(TimeUnit.DAYS);
-        captcha.setToken(token);
-        tokenCaptchaDomainService.create(captcha);
+        VerificationFactory.addToken(verification, String.valueOf(user.getId()), user, 7, TimeUnit.DAYS);
 
-        user.setToken(token.getToken());
+        tokenVerificationDomainService.create(verification);
+
+        user.setToken(verification.getTokenValue());
 
         userEventPublish.userCreated(user);
 

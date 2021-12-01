@@ -19,11 +19,11 @@ public class UserDomainService {
     private UserRepository userRepository;
 
     public User createUserByPhone(User user) {
-        UserPo userPo = userRepository.selectByUnionId(user.getPhone());
+        UserPo userPo = userRepository.findByUnionKey(user.getPhone());
         UserEvent userEvent;
         // 存在
         if (userPo == null) {
-            userRepository.insert(userPo = UserFactory.toUserPO(user));
+            userRepository.save(userPo = UserFactory.toUserPO(user));
             userEvent = UserEvent.created(UserEvent.Type.CREATED, user);
         } else {
             userRepository.update(userPo);

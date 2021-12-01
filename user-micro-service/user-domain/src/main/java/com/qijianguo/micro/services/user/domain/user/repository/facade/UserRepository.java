@@ -8,11 +8,25 @@ import com.qijianguo.micro.services.user.domain.user.repository.po.UserPo;
  */
 public interface UserRepository {
 
-    UserPo selectById(Integer id);
+    /**
+     * 根据ID查询
+     * @param id
+     * @return
+     */
+    UserPo findById(Integer id);
 
-    UserPo selectByUnionId(String unionKey);
+    /**
+     * 根据unionKey查询
+     * @param unionKey
+     * @return
+     */
+    UserPo findByUnionKey(String unionKey);
 
-    void insert(UserPo user);
+    /**
+     * 保存
+     * @param user
+     */
+    void save(UserPo user);
 
     void update(UserPo user);
 
