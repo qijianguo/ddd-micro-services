@@ -1,4 +1,4 @@
-package com.qijianguo.micro.services.user.infrastructure.config;
+package com.qijianguo.micro.services.account.infrastructure.config;
 
 import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import io.swagger.annotations.ApiOperation;
@@ -46,8 +46,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("user-micro-service[用户微服务]")
-                .description("用户微服务")
+                .title("account-micro-service[积分微服务]")
+                .description("积分微服务")
                 .contact(new Contact("Angus", "http://localhost:8081/doc.html", "1633972602@qq.com"))
                 .version("1.0-SNAPSHOT")
                 .build();

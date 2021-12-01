@@ -12,6 +12,9 @@
     <artifactId>account-interfaces</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.qijianguo.micro.services</groupId>
+            <artifactId>account-application</artifactId>
+        </dependency>
     </dependencies>
 </project>

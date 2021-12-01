@@ -7,7 +7,17 @@
     <groupId>com.qijianguo.micro.services</groupId>
     <artifactId>account-micro-service</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${account.micro.services.version}</version>
+
+    <properties>
+        <account.micro.services.version>1.0-SNAPSHOT</account.micro.services.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>1.8</java.version>
+    </properties>
+
     <modules>
         <module>account-application</module>
         <module>account-domain</module>
@@ -19,8 +29,32 @@
         <dependencies>
             <dependency>
                 <groupId>com.qijianguo.micro.services</groupId>
+                <artifactId>account-infrastructure</artifactId>
+                <version>${account.micro.services.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.qijianguo.micro.services</groupId>
+                <artifactId>account-domain</artifactId>
+                <version>${account.micro.services.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.qijianguo.micro.services</groupId>
+                <artifactId>account-application</artifactId>
+                <version>${account.micro.services.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.qijianguo.micro.services</groupId>
+                <artifactId>account-interfaces</artifactId>
+                <version>${account.micro.services.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.qijianguo.micro.services</groupId>
                 <artifactId>base-micro-service</artifactId>
-                <version>1.0.20-RELEASE</version>
+                <version>1.0.22-RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

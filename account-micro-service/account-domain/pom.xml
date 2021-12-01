@@ -11,5 +11,12 @@
 
     <artifactId>account-domain</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.qijianguo.micro.services</groupId>
+            <artifactId>account-infrastructure</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
