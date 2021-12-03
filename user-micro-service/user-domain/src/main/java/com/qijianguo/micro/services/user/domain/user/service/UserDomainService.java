@@ -19,7 +19,7 @@ public class UserDomainService {
     private UserRepository userRepository;
 
     public User createUserByPhone(User user) {
-        UserPo userPo = userRepository.findByUnionKey(user.getPhone());
+        UserPo userPo = userRepository.findByUnionKey(user.getPhone().get());
         UserEvent userEvent;
         // 存在
         if (userPo == null) {

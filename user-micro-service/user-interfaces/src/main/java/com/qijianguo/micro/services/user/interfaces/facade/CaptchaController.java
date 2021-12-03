@@ -2,12 +2,12 @@ package com.qijianguo.micro.services.user.interfaces.facade;
 
 import com.qijianguo.micro.services.base.model.dto.BaseResponse;
 import com.qijianguo.micro.services.user.application.service.CaptchaAppService;
-import com.qijianguo.micro.services.user.domain.verification.entity.Image;
-import com.qijianguo.micro.services.user.domain.verification.entity.Phone;
-import com.qijianguo.micro.services.user.interfaces.assembler.CaptchaAssembler;
-import com.qijianguo.micro.services.user.interfaces.dto.ImageRequest;
-import com.qijianguo.micro.services.user.interfaces.dto.PhoneRequest;
-import com.qijianguo.micro.services.user.interfaces.dto.PhoneResponse;
+import com.qijianguo.micro.services.user.domain.captcha.entity.Image;
+import com.qijianguo.micro.services.user.domain.captcha.entity.Phone;
+import com.qijianguo.micro.services.user.application.assembler.CaptchaAssembler;
+import com.qijianguo.micro.services.user.application.dto.ImageRequest;
+import com.qijianguo.micro.services.user.application.dto.PhoneRequest;
+import com.qijianguo.micro.services.user.application.dto.PhoneResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

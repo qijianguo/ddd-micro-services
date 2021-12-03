@@ -1,11 +1,13 @@
 package com.qijianguo.micro.services.user.application.service;
 
 import com.qijianguo.micro.services.base.exception.BusinessException;
-import com.qijianguo.micro.services.user.domain.verification.entity.Verification;
-import com.qijianguo.micro.services.user.domain.verification.service.VerificationDomainService;
-import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
+import com.qijianguo.micro.services.user.domain.captcha.entity.Captcha;
+import com.qijianguo.micro.services.user.domain.captcha.exception.CaptchaEmBusinessError;
+import com.qijianguo.micro.services.user.domain.captcha.service.CaptchaDomainService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author qijianguo
@@ -14,43 +16,44 @@ import org.springframework.stereotype.Service;
 public class CaptchaAppService {
 
     @Autowired
-    private VerificationDomainService imageVerificationDomainService;
+    private CaptchaDomainService imageCaptchaDomainService;
     @Autowired
-    private VerificationDomainService phoneVerificationDomainService;
+    private CaptchaDomainService phoneCaptchaDomainService;
     @Autowired
-    private VerificationDomainService tokenVerificationDomainService;
+    private CaptchaDomainService tokenCaptchaDomainService;
 
-    public Verification create(Verification verification) {
-        switch (verification.getType()) {
+    @Transactional(rollbackFor = BusinessException.class)
+    public Captcha create(Captcha captcha) {
+        switch (captcha.getType()) {
             case PHONE:
-                phoneVerificationDomainService.create(verification);
+                phoneCaptchaDomainService.create(captcha);
                 break;
             case IMAGE:
-                imageVerificationDomainService.create(verification);
+                imageCaptchaDomainService.create(captcha);
                 break;
             case TOKEN:
-                imageVerificationDomainService.create(verification);
+                imageCaptchaDomainService.create(captcha);
             default:
-                throw new BusinessException(UserEmBusinessError.CAPTCHA_TYPE_NOT_SUPPORT);
+                throw new BusinessException(CaptchaEmBusinessError.CAPTCHA_TYPE_NOT_SUPPORT);
         }
-        return verification;
+        return captcha;
 
     }
 
-    public void validate(Verification verification) {
-        switch (verification.getType()) {
+    @Transactional(rollbackFor = BusinessException.class)
+    public void validate(Captcha captcha) {
+        switch (captcha.getType()) {
             case PHONE:
-                phoneVerificationDomainService.verify(verification);
+                phoneCaptchaDomainService.verify(captcha);
                 break;
             case IMAGE:
-                imageVerificationDomainService.verify(verification);
+                imageCaptchaDomainService.verify(captcha);
                 break;
             case TOKEN:
-                tokenVerificationDomainService.verify(verification);
+                tokenCaptchaDomainService.verify(captcha);
             default:
-                throw new BusinessException(UserEmBusinessError.CAPTCHA_TYPE_NOT_SUPPORT);
+                throw new BusinessException(CaptchaEmBusinessError.CAPTCHA_TYPE_NOT_SUPPORT);
         }
-
     }
 
 }

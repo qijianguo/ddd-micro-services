@@ -1,6 +1,5 @@
 server:
   port: 8080
-
 spring:
   application:
     name: user_micro_service
@@ -27,7 +26,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL57Dialect
     database-platform: mysql
-
   redis:
     database: 0
     host: localhost
@@ -39,7 +37,7 @@ spring:
         max-wait: 1000ms
         min-idle: 2
         max-active: 512
-
+# Swagger配置
 swagger:
   production: false
   basic:
@@ -49,3 +47,37 @@ swagger:
 
 token:
   secret: 112312313
+
+#--------------------------------------SpringCloud组件配置-----------------------------------#
+# 注册中心配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10001/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+# Feign配置
+feign:
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+  hystrix:
+    disabled: true
+# Hystrix配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+# Turbine配置
+turbine:
+  app-config: ${spring.application.name}
+  aggregator:
+    cluster-config: default
+  cluster-name-expression: new String("default")
+#--------------------------------------------------------------------------------------#

@@ -3,12 +3,13 @@ package com.qijianguo.micro.services.user.interfaces.facade;
 import com.alibaba.fastjson.JSON;
 import com.qijianguo.micro.services.base.exception.EmBusinessError;
 import com.qijianguo.micro.services.user.application.service.CaptchaAppService;
-import com.qijianguo.micro.services.user.domain.verification.entity.Verification;
-import com.qijianguo.micro.services.user.domain.verification.entity.Phone;
-import com.qijianguo.micro.services.user.infrastructure.exception.UserEmBusinessError;
-import com.qijianguo.micro.services.user.interfaces.assembler.CaptchaAssembler;
-import com.qijianguo.micro.services.user.interfaces.dto.PhoneRequest;
-import com.qijianguo.micro.services.user.interfaces.dto.PhoneVerifyRequest;
+import com.qijianguo.micro.services.user.domain.captcha.entity.Captcha;
+import com.qijianguo.micro.services.user.domain.captcha.entity.Phone;
+
+import com.qijianguo.micro.services.user.domain.captcha.exception.CaptchaEmBusinessError;
+import com.qijianguo.micro.services.user.application.assembler.CaptchaAssembler;
+import com.qijianguo.micro.services.user.application.dto.PhoneRequest;
+import com.qijianguo.micro.services.user.application.dto.PhoneVerifyRequest;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,8 +50,8 @@ public class UserControllerTest {
         PhoneRequest request = new PhoneRequest();
         request.setPhone("17521226607");
         request.setCaptchaImage("");
-        Verification verification = CaptchaAssembler.toDO(request);
-        Phone p = captchaAppService.create(verification).getPhone();
+        Captcha captcha = CaptchaAssembler.toDO(request);
+        Phone p = captchaAppService.create(captcha).getPhone();
         number = p.getNumber();
         code = p.getCode();
         Assert.isTrue(p != null && p.getCode() != null, "获取验证码失败");
@@ -71,7 +72,7 @@ public class UserControllerTest {
         // 重复请求
         ResultActions repeatResult = byPhone();
         repeatResult.andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(UserEmBusinessError.CODE_EXPIRED.getErrCode()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(CaptchaEmBusinessError.CODE_EXPIRED.getErrCode()))
         ;
         logger.info("test003_loginByPhone finished");
     }

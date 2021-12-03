@@ -2,6 +2,9 @@ package com.qijianguo.micro.services.user.domain.user.repository.facade;
 
 import com.qijianguo.micro.services.user.domain.user.repository.po.UserEventPo;
 import com.qijianguo.micro.services.user.domain.user.repository.po.UserPo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 /**
  * @author qijianguo
@@ -33,4 +36,6 @@ public interface UserRepository {
     void delete(UserPo user);
 
     void saveEvent(UserEventPo user);
+
+    Page<UserPo> findByCriteria(Specification<UserPo> specification, Pageable pageable);
 }

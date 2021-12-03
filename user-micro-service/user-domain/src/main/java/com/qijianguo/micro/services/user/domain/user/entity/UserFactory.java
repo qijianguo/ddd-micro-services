@@ -27,7 +27,6 @@ public class UserFactory {
         user.setAge(0);
         user.setState(User.Status.NORMAL);
         user.setRole(new Role());
-        user.setPhone(phone);
         user.setCreateTime(new Date());
         user.setModifyTime(user.getCreateTime());
         user.setAuthType(PHONE);
@@ -89,7 +88,9 @@ public class UserFactory {
     public static Set<AuthPo> toAuthPOS(Set<Auth> authDOS) {
         Set<AuthPo> set = new HashSet<>();
         authDOS.forEach(auth -> {
-            set.add(toAuthPO(auth));
+            if (auth != null && auth.getType() != null) {
+                set.add(toAuthPO(auth));
+            }
         });
         return set;
     }

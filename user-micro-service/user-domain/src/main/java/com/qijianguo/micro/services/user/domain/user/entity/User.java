@@ -27,8 +27,6 @@ public class User {
 
     private Role role;
 
-    private String phone;
-
     private Auth.Type authType;
 
     private Set<Auth> auths = new HashSet<>();
@@ -73,7 +71,11 @@ public class User {
         return auths.add(auth);
     }
 
-    enum Status {
+    public Optional<String> getPhone() {
+        return auths.stream().filter(auth -> auth.getType() == Auth.Type.PHONE).map(Auth::getUnionKey).findFirst();
+    }
+
+    public enum Status {
         DELETED(-1),
         NORMAL(0),
         ;
