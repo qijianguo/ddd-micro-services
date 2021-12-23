@@ -5,7 +5,7 @@
     <parent>
         <artifactId>base-micro-service</artifactId>
         <groupId>com.qijianguo.micro.services</groupId>
-        <version>1.0.23-RELEASE</version>
+        <version>1.0.26-RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
